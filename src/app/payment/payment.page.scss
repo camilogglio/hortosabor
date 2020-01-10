@@ -1,0 +1,90 @@
+ion-toolbar {
+    --background: #00b84c;
+}
+ion-title{
+    color:#ffda01;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+ion-icon {
+    color: #fff;
+    font-size: 24px;
+}
+.payment-method{
+    padding: 20px 40px;
+    background: #f4f4f4;
+}
+.payment-method img{
+    width:60px;
+}
+.payment-method p{
+    margin: 0;
+    text-align: center;
+    font-size:14px;
+    color:#767676;
+}
+.payment-method p.active{
+    color:#00b84c;
+}
+.authorize_text h2{
+    text-align: center;
+    font-weight:bold;
+    color:#666666;
+    font-size: 32px;
+    padding-top: 24px;
+}
+.payment-cards{
+    padding:20px 40px;
+}
+.payment-cards p{
+    font-size:12px;
+    color:#666666;
+}
+.price-button{
+    --background: #f16000;
+    border-radius: 10px;
+    margin: 40px; 
+    font-weight: bold;
+    font-size: 20px;
+    height:48px;
+}
+.payment-cards img{
+    width: 120px;
+    border: 1px solid #d3d1d1;
+    border-radius: 3px;
+    padding: 2px;
+}
+.payment-form{
+    padding:0px 20px;
+}
+.payment-form ion-input {
+    border: 1px solid #808080;
+    border-radius: 10px;
+    position: relative;
+    --padding-start: 45px;
+}
+.payment-form img{
+    width: 30px;
+    position: absolute;
+    top: 17px;
+    left: 16px;
+}
+.payment-form .lock{
+    width:20px !important;
+    top:14px !important;
+}
+.card_active{
+    right: 17px !important;
+    top: 19px !important;
+    left: auto !important;
+}
+
+@media (max-width:320px){
+    .authorize_text h2{
+        font-size:24px;
+    }
+    .payment-method {
+        padding: 20px 18px;
+    }
+}

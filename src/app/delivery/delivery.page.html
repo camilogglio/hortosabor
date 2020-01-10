@@ -1,0 +1,44 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-left>Delivery</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="map">
+    <!-- <img src="../../assets/images/marker.png" class="map-marker" />
+    <img src="../../assets/images/map.jpg" /> -->
+    <div #map id="map"></div>
+  </div>
+  <div class="form">
+    <ion-item lines="none">
+      <ion-label>Delivery Place</ion-label>
+      <ion-select mode="md" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedPlace" (ionChange)="changeDeliveryPlace($event)">
+        <ion-select-option *ngFor="let place of places;" value="{{place.id}}">{{place.name}}</ion-select-option>
+        <!-- <ion-select-option value="blonde">Blonde</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="red">Red</ion-select-option> -->
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Delivery Hour</ion-label>
+      <ion-select mode="md" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedDate">
+        <ion-select-option *ngFor="let date of intervalDate;" value="{{date}}">{{date}}</ion-select-option>
+        <!-- <ion-select-option value="blonde">Blonde</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="red">Red</ion-select-option> -->
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-textarea placeholder="Comments" [(ngModel)]="comments"></ion-textarea>
+    </ion-item>
+    <ion-button lines="none" class="cart-buttons" expand="block" (click)="confirm()">CONFIRM</ion-button>
+  </div>
+</ion-content>

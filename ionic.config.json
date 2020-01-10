@@ -1,0 +1,7 @@
+{
+  "name": "hortosabor",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

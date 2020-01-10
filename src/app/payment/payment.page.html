@@ -1,0 +1,73 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title text-left>Payment</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="payment-method" text-center>
+    <ion-row>
+      <ion-col size="4">
+        <img src="../../assets/images/credit.png"/>
+        <p class="active">Credit Card</p>
+      </ion-col>
+      <ion-col size="4">
+        <img src="../../assets/images/debit.png"/>
+        <p>Debit Card</p>
+      </ion-col>
+      <ion-col size="4">
+        <img src="../../assets/images/cash.png"/>
+        <p>Cash</p>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="authorize_text">
+    <h2>Authorize for $500.00</h2>
+  </div>
+  <div class="payment-cards " text-center>
+    <p>We accept</p>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+       <ion-col size="2">
+        <img src="../../assets/images/visa1.png"/>
+       </ion-col>
+       <ion-col size="2">
+        <img src="../../assets/images/visa2.png"/>
+       </ion-col>
+       <ion-col size="2">
+        <img src="../../assets/images/visa3.png"/>
+       </ion-col>
+       <ion-col size="2">
+        <img src="../../assets/images/visa4.png"/>
+       </ion-col>
+       <ion-col size="2"></ion-col>
+    </ion-row>
+  </div>
+
+  <div class="payment-form">
+    <ion-row>
+      <ion-col size="12">
+        <ion-input type="text" placeholder="**** **** 1234"></ion-input>
+        <img src="../../assets/images/card.png"/>
+        <img src="../../assets/images/visa1.png" class="card_active"/>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input type="text" placeholder="12/25"></ion-input>
+        <img src="../../assets/images/card.png"/>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input type="text" placeholder="CVV"></ion-input>
+        <img src="../../assets/images/lock.png" class="lock"/>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-button expand="block" class="price-button">AUTHORIZE</ion-button>
+</ion-content>
