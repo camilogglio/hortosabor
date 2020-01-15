@@ -92,7 +92,7 @@
         
         </li> -->
         <li>
-          <label for="cardNumber">Card number:</label>
+          <label for="cardNumber">Card Number:</label>
           <input  type="tel" id="cardNumber" data-checkout="cardNumber" placeholder="4509 9535 6623 3704"
             value="4509 9535 6623 3704"  formControlName="cardnumber" (keyup)="validateCard($event.target)" />
             <p class="payment-error" *ngIf="paymentForm.get('cardnumber').hasError('required') && paymentForm.get('cardnumber').touched">Card Number is required</p>
@@ -138,8 +138,8 @@
             <p class="payment-error" *ngIf="!paymentForm.controls.expYear.valid  && (paymentForm.controls.expYear.touched)">Expiration year is required</p>
         </li>
         <li>
-          <label for="cardholderName">Card holder name:</label>
-          <input type="text" id="cardholderName" data-checkout="cardholderName" placeholder="APRO" value="APRO" formControlName="cardname" />
+          <label for="cardholderName">Card Holder Name:</label>
+          <input type="text" id="cardholderName" data-checkout="cardholderName" placeholder="Enter Card Holder Name" value="APRO" formControlName="cardname" />
           <p class="payment-error" *ngIf="!paymentForm.controls.cardname.valid  && (paymentForm.controls.cardname.touched)">Card Holder Number is required</p>
        
         </li>     

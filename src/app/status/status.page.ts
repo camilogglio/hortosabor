@@ -42,7 +42,7 @@ export class StatusPage implements OnInit {
         {
           name: 'verify_no',
           type: 'text',
-          placeholder: 'verification number'
+          placeholder: 'Verification Number'
         }        
       ],
       buttons: [

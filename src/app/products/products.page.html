@@ -26,11 +26,29 @@
     
     <h2>{{selectedProduct.title}} <b>X {{selectedProduct.units}}</b></h2>
         <p>{{selectedProduct.description}}</p> 
-        <div style="position: absolute;top: 50%;left: 16px;font-size: 25px;z-index: 2;" class="slider-arrow" (click)="slidePrev($event)">
-          <ion-icon name="ios-arrow-back"></ion-icon>
+        <div style="    position: absolute;
+        top: 1%;
+        left: 8px;
+        z-index: 2;
+        background: #ffffff;
+        line-height: 10px;
+        padding: 4px;
+        color: #292929;
+        text-align: center;
+        border-radius: 4px;" class="slider-arrow" (click)="slidePrev($event)">
+          <ion-icon name="ios-arrow-back"></ion-icon><span style="font-size: 12px;    vertical-align: super;">Prev</span>
         </div>
-        <div style="position: absolute;top: 50%;right: 16px;font-size: 25px;z-index: 2;" class="slider-arrow" (click)="slideNext($event)">
-          <ion-icon name="ios-arrow-forward"></ion-icon>
+        <div style="    position: absolute;
+        top: 1%;
+        right: 8px;
+        z-index: 2;
+        background: #ffffff;
+        line-height: 10px;
+        padding: 4px;
+        color: #292929;
+        text-align: center;
+        border-radius: 4px;" class="slider-arrow" (click)="slideNext($event)">
+          <span style="font-size: 12px;    vertical-align: super;">Next</span><ion-icon name="ios-arrow-forward"></ion-icon>
         </div>
         <ion-spinner name="lines"  *ngIf="spinnerStatus ==false" text-center style="margin: 0 auto;
         width: 100%;

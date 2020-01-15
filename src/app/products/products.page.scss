@@ -8,8 +8,8 @@ ion-title{
 }
 
 ion-icon {
-    color: #fff;
-    font-size: 24px;
+    color: #0d0c0c;
+    font-size: 20px;
 }
 .products{
     padding:20px;
@@ -25,18 +25,21 @@ ion-searchbar{
 .product-slider{
     padding:20px 0px;
     background: #f4f4f4;
+        position: relative;
 }
 .product-slider h2 {
-    font-size: 36px;
+    font-size: 20px;
     color: #474747;
     font-weight: 600;
     margin-bottom: 0;
+    margin-top: 36px;
+    padding: 0px 10px;
     text-align: center;
   }
   .product-slider  p{
-    font-size: 18px;
+    font-size: 15px;
     color:#00b84c;
-    margin: 0;
+    margin: 10px;
     text-align: center;
   }
 .swiper-slide {
@@ -52,10 +55,9 @@ ion-searchbar{
     height: 150px;
   }
   .price h4{
-      font-size:36px;
+      font-size:24px;
       color: #676564;
       font-weight: bold;
-      margin: 0;
       text-align: left;
   }
   .price p{
@@ -97,10 +99,10 @@ ion-searchbar{
 .btn-cart {
     border:1px solid #f16000;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     text-align: right;
     border-radius: 50px;
-    line-height: 46px;
+    line-height: 40px;
     text-align: center;
     padding-left: 18px;
 }
@@ -134,7 +136,7 @@ img.arrow {
 }
 @media (max-width: 411px){
 .slider-arrow {
-    top: 50% !important;
+    // top: 50% !important;
 }
 img.arrow{
     top: 17% ;
@@ -142,21 +144,21 @@ img.arrow{
 }
 @media (max-width:375px){
     .slider-arrow{
-        top:44% !important;
+        // top:44% !important;
     }
 }
 @media (max-width: 360px){
     .slider-arrow {
-        top: 54% !important;
+        // top: 54% !important;
     }
     .price h4{
-    font-size: 28px;
+    // font-size: 28px;
     }
     .product-slider h2 {
-        font-size: 30px;
+        // font-size: 30px;
     }
     .product-slider p{
-        font-size: 16px;
+        // font-size: 16px;
     }
     }
 @media (max-width:320px){
@@ -164,13 +166,13 @@ img.arrow{
         font-size: 24px;
     }
     .product-slider .slider-arrow{
-        top:60% !important;
+        // top:60% !important;
     }
     .price h4 {
-        font-size: 24px;
+        // font-size: 24px;
     }
     .product-slider p{
-        font-size: 14px;
+        // font-size: 14px;
     }
     .price-button h3 {
         color: #fff;
