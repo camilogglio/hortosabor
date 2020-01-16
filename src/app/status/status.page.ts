@@ -10,9 +10,9 @@ export class StatusPage implements OnInit {
   ordersData:any='';
   status:any=''
   constructor(public api:ApiService, public alertController:AlertController, public events:Events) { 
-    this.events.subscribe('status:created', (time) => {
-      this.presentAlertPrompt();
-    });
+    // this.events.subscribe('status:created', (time) => {
+    //   this.presentAlertPrompt();
+    // });
    
   }
   ionViewDidEnter(){

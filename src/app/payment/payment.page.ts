@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ApiService } from '../api.service';
+import { Platform ,Events} from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router,ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -30,7 +31,7 @@ export class PaymentPage implements OnInit {
   doSubmit = false;
   token :any='';
   products:any=[];
-  constructor(public cart: CartService, public api: ApiService,    public formBuilder: FormBuilder, public route:ActivatedRoute, public router:Router) {
+  constructor(public events:Events,public cart: CartService, public api: ApiService,    public formBuilder: FormBuilder, public route:ActivatedRoute, public router:Router) {
     this.activeImage =true;
     console.log(this.date);
     Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
@@ -196,7 +197,10 @@ export class PaymentPage implements OnInit {
                 this.api.presentToast(data.success);
                 this.cardForm.reset();
                 this.paymentForm.reset();
+                localStorage.removeItem('deliveryData');
                 localStorage.removeItem('cart_data');
+                
+                this.events.publish('delivery:created', Date.now());
                 this.router.navigate(['/delivery'])
               }
               
@@ -298,6 +302,8 @@ export class PaymentPage implements OnInit {
           this.cardForm.reset();
           this.paymentForm.reset();
           localStorage.removeItem('cart_data');
+          localStorage.removeItem('deliveryData');
+          this.events.publish('delivery:created', Date.now());
           this.router.navigate(['/delivery'])
       // if (data.search.length > 0) {
       //   this.searchResult = data.search;

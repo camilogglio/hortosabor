@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController,MenuController } from '@ionic/angular';
+import { NavController,AlertController,Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../api.service';
 import { Router, RouterEvent, NavigationEnd, NavigationExtras } from '@angular/router';
@@ -27,17 +27,24 @@ export class DeliveryPage implements OnInit {
   comments: any = '';
   hours: any = ['10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM', '07:00 PM'];
   constructor(
+    public alertController:AlertController,
     public navCtrl: NavController,
     public storage: Storage,
     public api: ApiService,
     public router: Router,
     private geolocation: Geolocation,
-    private nativeGeocoder: NativeGeocoder
+    private nativeGeocoder: NativeGeocoder,
+    public events: Events
    
-  ) { }
+  ) { 
+    this.events.subscribe('delivery:created', (time) => {
+      this.selectedDate ='';
+      this.selectedPlace = ''
+    });
+ ;
+  }
 
-  ngOnInit() {
- 
+  ngOnInit() { 
     this.getDeliveryPlaces();
     this.loadMap();
   }
@@ -103,7 +110,30 @@ export class DeliveryPage implements OnInit {
         this.address = "Address Not Available!";
       });
   } */
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      header: 'Are you sure!',
+      message: 'Replacing the address could empty the cart.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            localStorage.removeItem('cart_data')
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
   getDeliveryPlaces() {
     this.api.showLoader();
     const url = '/locations';
@@ -126,16 +156,39 @@ export class DeliveryPage implements OnInit {
 
   changeDeliveryPlace(evt) {   
     this.selectedPlaceDate = {};
-    console.log('selected delivery:- ', this.selectedPlace);
-    var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
-    console.log('result:- ', result);
-    if(result.length>0){
-      this.selectedPlaceDate = result[0];
-      this.selectedDate = '';
-      this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
-      // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
-      this.changeDeleveryTime();
+    console.log('selected delivery:- ', this.selectedPlace,JSON.parse(localStorage.getItem('deliveryData')));
+    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
+      if(this.selectedPlace != JSON.parse(localStorage.getItem('deliveryData')).place){
+        console.log("ifffffffffffffffffff")
+        if(localStorage.getItem('cart_data') && JSON.parse(localStorage.getItem('cart_data')).length>0){
+          this.presentAlertPrompt();
+        }
+       
+      }else{
+        console.log("elsssssssssssss")
+        var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+        console.log('result:- ', result);
+        if(result.length>0){
+          this.selectedPlaceDate = result[0];
+          this.selectedDate = '';
+          this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+          // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+          this.changeDeleveryTime();
+        }
+      }
+
+    }else{
+      var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+      console.log('result:- ', result);
+      if(result.length>0){
+        this.selectedPlaceDate = result[0];
+        this.selectedDate = '';
+        this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+        // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+        this.changeDeleveryTime();
+      }
     }
+
   
   }
 
@@ -178,6 +231,7 @@ export class DeliveryPage implements OnInit {
       if (this.comments.length) {
         params.comment = this.comments;
       }
+      localStorage.setItem('deliveryData', JSON.stringify(params));
       // this.navCtrl.navigateForward('/products', params);
       const navigationExtras: NavigationExtras = {
         queryParams: {

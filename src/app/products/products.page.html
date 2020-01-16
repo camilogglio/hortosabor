@@ -14,7 +14,7 @@
 <ion-content>
   <div class="products">
      <div class="search">
-      <ion-searchbar [(ngModel)]="product_search" placeholder="Search" lines="none" (keyup)="searchProduct(product_search)"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="product_search" placeholder="Search" lines="none" (keyup)="searchProduct(product_search)" (ionClear)="onCancel($event)"></ion-searchbar>
      </div>
   </div>
   <div *ngIf="searchResult.length>0">

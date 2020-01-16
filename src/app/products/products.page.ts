@@ -72,7 +72,9 @@ export class ProductsPage implements OnInit {
 
     });
   }
-
+  onCancel(){
+    this.searchResult = [];
+  }
   getIndex(testSlider) {
     this.quantity = 1;
     this.productSlide.getActiveIndex().then((index) => {
