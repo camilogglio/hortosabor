@@ -1,90 +1,140 @@
 ion-toolbar {
-    --background: #00b84c;
+  --background: #00b84c;
 }
-ion-title{
-    color:#ffda01;
-    font-size: 20px;
-    vertical-align: middle;
+ion-title {
+  color: #ffda01;
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 ion-icon {
-    color: #fff;
-    font-size: 24px;
+  color: #fff;
+  font-size: 24px;
 }
-.payment-method{
-    padding: 20px 40px;
-    background: #f4f4f4;
+.payment-method {
+  padding: 20px 40px;
+  background: #f4f4f4;
 }
-.payment-method img{
-    width:60px;
+.payment-method img {
+  width: 60px;
 }
-.payment-method p{
-    margin: 0;
-    text-align: center;
-    font-size:14px;
-    color:#767676;
+.payment-method p {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #767676;
 }
-.payment-method p.active{
-    color:#00b84c;
+.payment-method p.active {
+  color: #00b84c;
 }
-.authorize_text h2{
-    text-align: center;
-    font-weight:bold;
-    color:#666666;
-    font-size: 32px;
-    padding-top: 24px;
+.authorize_text h2 {
+  text-align: center;
+  font-weight: bold;
+  color: #666666;
+  font-size: 32px;
+  padding-top: 24px;
 }
-.payment-cards{
-    padding:20px 40px;
+.payment-cards {
+  padding: 20px 40px;
 }
-.payment-cards p{
-    font-size:12px;
-    color:#666666;
+.payment-cards p {
+  font-size: 12px;
+  color: #666666;
 }
-.price-button{
-    --background: #f16000;
-    border-radius: 10px;
-    margin: 40px; 
-    font-weight: bold;
-    font-size: 20px;
-    height:48px;
+.price-button {
+  --background: #f16000;
+  background: #f16000;
+  border-radius: 10px;
+  border: 1px solid #f16000;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
 }
-.payment-cards img{
-    width: 120px;
-    border: 1px solid #d3d1d1;
-    border-radius: 3px;
-    padding: 2px;
+.payment-cards img {
+  width: 120px;
+  border: 1px solid #d3d1d1;
+  border-radius: 3px;
+  padding: 2px;
 }
-.payment-form{
-    padding:0px 20px;
+.payment-form {
+  padding: 0px 20px;
+}
+.payment-error{
+  color: red;
+  font-size: 13px;
+}
+.payment-form input{
+  border: 1px solid #808080;
+  border-radius: 10px;
+  position: relative;
+  --padding-start: 45px;
 }
 .payment-form ion-input {
-    border: 1px solid #808080;
-    border-radius: 10px;
-    position: relative;
-    --padding-start: 45px;
+  border: 1px solid #808080;
+  border-radius: 10px;
+  position: relative;
+  --padding-start: 45px;
 }
-.payment-form img{
-    width: 30px;
-    position: absolute;
-    top: 17px;
-    left: 16px;
+.payment-form img {
+  width: 30px;
+  position: absolute;
+  top: 17px;
+  left: 16px;
 }
-.payment-form .lock{
-    width:20px !important;
-    top:14px !important;
+.payment-form form{
+margin-top:30px;
 }
-.card_active{
-    right: 17px !important;
-    top: 19px !important;
-    left: auto !important;
+.payment-form form fieldset {
+  border-radius: 10px;
+  border: 1px solid #bfb5b5;
+}
+.payment-form ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+.payment-form ul li{
+  line-height:45px;
+}
+.payment-form ul li input {
+  width: 100%;
+  border: 1px solid #bdbcbc;
+  padding-left: 10px;
+  height: 40px;
+}
+.payment-form ul li  ion-datetime {
+  height: 40px;
+  border: 1px solid #bababa;
+  line-height: 21px;
+  padding-left: 10px;
+  color: #6f6b6b;
+}
+.payment-form ul li  ion-input {
+  height: 40px;
+  border: 1px solid #bababa;
+  line-height: 21px;
+  padding-left: 10px;
+  color: #6f6b6b;
 }
 
-@media (max-width:320px){
-    .authorize_text h2{
-        font-size:24px;
-    }
-    .payment-method {
-        padding: 20px 18px;
-    }
+.payment-form .lock {
+  width: 20px !important;
+  top: 14px !important;
+}
+.card_active {
+  right: 17px !important;
+  top: 19px !important;
+  left: auto !important;
+}
+.user-info ion-input {
+  --padding-start: 10px;
+}
+@media (max-width: 320px) {
+  .authorize_text h2 {
+    font-size: 24px;
+  }
+  .payment-method {
+    padding: 20px 18px;
+  }
 }

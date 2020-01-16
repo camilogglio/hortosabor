@@ -5,15 +5,15 @@
       </ion-buttons>
     <ion-title text-left>Status</ion-title>
     <ion-buttons slot="end">
-      <ion-icon name="search"></ion-icon>
-      <ion-icon name="md-more"></ion-icon>
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="order-number">
-    <h2>Order Number</h2>
+    <h2>{{ordersData[0]?.order_number}}</h2>
   </div>
   <div class="track-order">
     <img src="../../assets/images/marker.png"/>
@@ -34,7 +34,9 @@
     </ol>
     <img src="../../assets/images/flag.png" class="flag"/>
     <p text-center style="    color: #00b84c;
-    margin: 0px;">Loremipsum</p>
+    margin: 0px;" *ngIf="ordersData.length>0">{{ordersData[0]?.status}}</p>
+     <p text-center style="    color: #00b84c;
+     margin: 0px;" *ngIf="ordersData.length==0">{{status}}</p>
   </div>
-  <ion-button expand="block" class="ready-togobtn">READY TO GO</ion-button>
+  <!-- <ion-button expand="block" class="ready-togobtn">READY TO GO</ion-button> -->
 </ion-content>

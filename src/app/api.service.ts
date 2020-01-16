@@ -45,8 +45,8 @@ export class ApiService {
 
   public post(url, params) {
     const headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
+    // headers.append('Content-Type', 'application/json');
     const options = new RequestOptions({ headers: headers });
     return this.http
       .post(this.url + url, JSON.stringify(params), options)

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController,MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../api.service';
 import { Router, RouterEvent, NavigationEnd, NavigationExtras } from '@angular/router';
@@ -33,9 +33,11 @@ export class DeliveryPage implements OnInit {
     public router: Router,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder
+   
   ) { }
 
   ngOnInit() {
+ 
     this.getDeliveryPlaces();
     this.loadMap();
   }
@@ -122,17 +124,19 @@ export class DeliveryPage implements OnInit {
     });
   }
 
-  changeDeliveryPlace(evt) {
-    this.api.showLoader();
+  changeDeliveryPlace(evt) {   
     this.selectedPlaceDate = {};
     console.log('selected delivery:- ', this.selectedPlace);
     var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
     console.log('result:- ', result);
-    this.selectedPlaceDate = result[0];
-    this.selectedDate = '';
-    this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
-    // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
-    this.changeDeleveryTime();
+    if(result.length>0){
+      this.selectedPlaceDate = result[0];
+      this.selectedDate = '';
+      this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+      // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+      this.changeDeleveryTime();
+    }
+  
   }
 
   changeDeleveryTime() {
@@ -160,11 +164,11 @@ export class DeliveryPage implements OnInit {
   confirm() {
     setTimeout(() => {
       if (!this.selectedPlace.length) {
-        this.api.presentToast('Please choose delivery place.');
+        this.api.presentToast('Please select delivery place.');
         return;
       }
       if (!this.selectedDate.length) {
-        this.api.presentToast('Please choose delivery hour.');
+        this.api.presentToast('Please select delivery hour.');
         return;
       }
       let params: any = {

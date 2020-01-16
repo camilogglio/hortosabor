@@ -45,9 +45,11 @@ ion-searchbar{
     }
    
   ion-slide > img {
-    max-height: 100%;
-    max-width: 100%;
+    // max-height: 100%;
+    // max-width: 100%;
     margin: 0px 0;
+    width: 300px;
+    height: 150px;
   }
   .price h4{
       font-size:36px;
@@ -98,7 +100,9 @@ ion-searchbar{
     font-size: 24px;
     text-align: right;
     border-radius: 50px;
-    line-height: 14px;
+    line-height: 46px;
+    text-align: center;
+    padding-left: 18px;
 }
 .ion-cart{
     background-color:#f16000;
@@ -123,6 +127,10 @@ img.arrow {
 .searchbar-input {
     box-shadow: none !important;
 
+}
+.up-down-arrow {
+    display: inline-grid;
+    float: right;
 }
 @media (max-width: 411px){
 .slider-arrow {

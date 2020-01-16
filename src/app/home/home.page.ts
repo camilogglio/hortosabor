@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController,MenuController } from '@ionic/angular';
 import { ApiService } from '../api.service';
 import { Storage } from '@ionic/storage';
 
@@ -15,10 +15,12 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public api: ApiService,
-    public storage: Storage
+    public storage: Storage,
+    public menu:MenuController
   ) {
+    this.menu.swipeEnable(false);
     // console.log(Mercadopago);
-    // Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
+    Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
     // Mercadopago.createToken(form, (tokenHandler) => {
     //   console.log('tokenHandler', tokenHandler);
     // });
@@ -70,6 +72,7 @@ export class HomePage {
     if(!this.doSubmit){
       console.log('event', event);
       var $form = document.querySelector('#pay');
+      console.log( $form )
       // Mercadopago.createToken($form, this.sdkResponseHandler); // The function "sdkResponseHandler" is defined below
       Mercadopago.createToken($form, (res) => {
         console.log('token', res);

@@ -16,9 +16,12 @@ p.count{
     font-size: 14px;
     vertical-align: middle;
 }
-.product-img{
-    // display: flex;
-    font-size: 14px;   
+.product-img {
+    width: 70px;
+    height: 70px;
+    border: 1px solid #bbb1b1;
+    border-radius: 50px;
+    padding: 8px;
 }
 .product-img img{
     margin-right:6px;
@@ -87,7 +90,9 @@ p.count{
 .carticons{
     padding: 0px 60px;
 }
-
+.active{
+    border: 2px solid #ff2400;
+}
 @media (max-width:320px){
     .product-img img{
         width:100%;

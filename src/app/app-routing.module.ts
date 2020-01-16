@@ -34,7 +34,11 @@ const routes: Routes = [
   {
     path: 'status',
     loadChildren: () => import('./status/status.module').then( m => m.StatusPageModule)
+  },  {
+    path: 'terms',
+    loadChildren: () => import('./terms/terms.module').then( m => m.TermsPageModule)
   }
+
 ];
 
 @NgModule({

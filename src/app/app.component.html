@@ -13,10 +13,11 @@
       <ion-content class="ion-menu-content">
         <ion-list class="ion-menu-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item (click)="gotoPage(p.url)"> 
+              <!-- [ngClass]="{'active': selectedItem == p.url}" -->
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
               <img class="menu-icon-img" [src]="p.icon" >
-              <ion-label>
+              <ion-label >
                 {{p.title}}
               </ion-label>
             </ion-item>
