@@ -12,13 +12,27 @@
 </ion-header>
 
 <ion-content >
+  <ion-row class="cart-labels" text-center>
+    <ion-col size="2" >
+      <label>Qty</label>
+     </ion-col>
+     <ion-col size="4">
+       <label>Product</label>
+     </ion-col>
+     <ion-col size="3">
+      <label>Price</label>
+    </ion-col>
+    <ion-col size="3">
+      <label>Total</label>
+    </ion-col>
+  </ion-row>
   <div *ngIf="cartList.length>0">
     <ion-row class="cart-list" *ngFor="let cart of cartList; let i = index"  [ngClass]="{'active': cart.selectedstatus == true}"  (click)="SelectedProduct(cart,i)">
       <!-- <div > -->
-        <ion-col size="1" >
+        <ion-col size="2" >
           <p class="count">{{cart.quantity}}</p>
          </ion-col>
-         <ion-col size="5">
+         <ion-col size="4">
            <div class="product-img">
              <img src="../../assets/images/Orange.png" *ngIf="cart.images.length ==0"
              />

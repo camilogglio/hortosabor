@@ -31,7 +31,7 @@ ion-icon {
   text-align: center;
   font-weight: bold;
   color: #666666;
-  font-size: 32px;
+  font-size: 24px;
   padding-top: 24px;
 }
 .payment-cards {
@@ -45,11 +45,12 @@ ion-icon {
   --background: #f16000;
   background: #f16000;
   border-radius: 10px;
-  border: 1px solid #f16000;
+  border: 1px solid #f16000 !important;
   font-weight: bold;
   font-size: 16px;
   color: #fff;
   width: 100%;
+  box-shadow: none !important;
   padding: 10px;
 }
 .payment-cards img {
@@ -63,19 +64,23 @@ ion-icon {
 }
 .payment-error{
   color: red;
-  font-size: 13px;
+  font-size: 11px;
+  margin: 0;
 }
 .payment-form input{
   border: 1px solid #808080;
   border-radius: 10px;
   position: relative;
-  --padding-start: 45px;
+  padding: 0px 0 0 10px;
+    height: 44px;
+    width: 100%;
+    outline: none;
 }
 .payment-form ion-input {
   border: 1px solid #808080;
   border-radius: 10px;
   position: relative;
-  --padding-start: 45px;
+  outline: none;    
 }
 .payment-form img {
   width: 30px;
@@ -102,6 +107,7 @@ margin-top:30px;
   border: 1px solid #bdbcbc;
   padding-left: 10px;
   height: 40px;
+  border-radius: 10px;
 }
 .payment-form ul li  ion-datetime {
   height: 40px;
@@ -109,6 +115,7 @@ margin-top:30px;
   line-height: 21px;
   padding-left: 10px;
   color: #6f6b6b;
+  border-radius: 10px;
 }
 .payment-form ul li  ion-input {
   height: 40px;
@@ -116,6 +123,8 @@ margin-top:30px;
   line-height: 21px;
   padding-left: 10px;
   color: #6f6b6b;
+  border-radius: 10px;
+  outline: none;
 }
 
 .payment-form .lock {
@@ -129,6 +138,7 @@ margin-top:30px;
 }
 .user-info ion-input {
   --padding-start: 10px;
+  outline: none;
 }
 @media (max-width: 320px) {
   .authorize_text h2 {
