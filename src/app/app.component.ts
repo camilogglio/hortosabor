@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 export class AppComponent {
   selectedItem='';
   public appPages = [
-    // {
-    //   title: 'Products',
-    //   url: '/products',
-    //   icon: 'assets/images/Products.png'
-    // },
+    {
+      title: 'Products',
+      url: '/products',
+      icon: 'assets/images/Products.png'
+    },
     {
       title: 'Delivery',
       url: '/delivery',
@@ -38,16 +38,16 @@ export class AppComponent {
       url: '/status',
       icon: 'assets/images/Order.png'
     },
-    // {
-    //   title: 'Receipts',
-    //   url: '/status',
-    //   icon: 'assets/images/Receipt.png'
-    // },
     {
-      title: 'Terms & Conditions',
-      url: '/terms',
-      icon: 'assets/images/Terms&Conditions.png'
-    }
+      title: 'Receipts',
+      url: '/history',
+      icon: 'assets/images/Receipt.png'
+    },
+    // {
+    //   title: 'Terms & Conditions',
+    //   url: '/terms',
+    //   icon: 'assets/images/Terms&Conditions.png'
+    // }
   ];
 
   constructor(
@@ -66,6 +66,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+  openterms(){
+    window.open('https://www.hortosabor.com.ar/terminos', '_system');  
   }
   gotoPage(url: any) {
     this.selectedItem = url;

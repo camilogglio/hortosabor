@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/file": "^5.19.1",
+    "@ionic-native/file-transfer": "^5.19.1",
     "@ionic-native/geolocation": "^5.19.1",
     "@ionic-native/native-geocoder": "^5.18.1-beta.5",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -29,6 +31,8 @@
     "@ionic/storage": "^2.2.0",
     "cordova-android": "^8.1.0",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
@@ -89,7 +93,9 @@
       "cordova-sqlite-storage": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To get your current location."
-      }
+      },
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "android"

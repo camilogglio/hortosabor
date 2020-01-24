@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, NavController, NavParams } from '@ionic/angular';
+import { IonSlides, NavController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../api.service';
 import { CartService } from '../cart.service';
 import { Router, RouterEvent, NavigationEnd, NavigationExtras, ActivatedRoute } from '@angular/router';
-
+import { ProductdetailsPage } from '../productdetails/productdetails.page';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
@@ -33,6 +33,7 @@ export class ProductsPage implements OnInit {
     private route: ActivatedRoute,
     public api: ApiService,
     public cart: CartService,
+    public modalCtrl: ModalController
   ) {
     this.total = this.cart.calculateTotal();
     console.log(this.cart.calculateTotal());
@@ -46,17 +47,37 @@ export class ProductsPage implements OnInit {
       }
     });
   }
+  ionViewDidEnter(){
+    this.productSlide.slideTo(0);
+    this.total = this.cart.calculateTotal();
+  }
   addQuantity() {
     this.quantity = this.quantity + 1;
-
-    this.selectedProduct.quantity = this.quantity;
+     this.selectedProduct.quantity = this.quantity;
+     this.api.presentToast('Click on cart button to add product.');
   }
   removeQuantity() {
     if (this.quantity > 1) {
       this.quantity = this.quantity - 1;
-
       this.selectedProduct.quantity = this.quantity;
+      this.api.presentToast('Click on cart button to add product.');
     }
+  }
+  async presentModal(data) {
+    console.log(data);
+    const modal: HTMLIonModalElement = await this.modalCtrl.create({
+       component: ProductdetailsPage,
+       cssClass: 'calender-section',
+       componentProps: {
+        data :data
+       }
+    });
+
+    // modal.onDidDismiss().then((data) => {
+    
+    // });
+
+    await modal.present();
   }
   ngOnInit() {
     this.total = this.cart.calculateTotal();
@@ -69,8 +90,7 @@ export class ProductsPage implements OnInit {
     this.productSlide.getActiveIndex().then((index) => {
       console.log(index, "index")
       this.selectedProduct = this.products[index];
-
-    });
+     });
   }
   onCancel(){
     this.searchResult = [];
@@ -136,6 +156,7 @@ export class ProductsPage implements OnInit {
     // this.navCtrl.navigateForward(url);
   }
   getProducts() {
+    console.log("dfsdsdf");
     this.spinnerStatus = false;
     // this.api.showLoader();
     const url = '/products';

@@ -1,0 +1,79 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title text-left>History</ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div class="receipt-page">
+   <ion-row>
+     <ion-col size="8">
+      <input id="phone-no" type="hidden" placeholder="Mobile"  class="signupdailcode" [(ngModel)]="dial_code">
+      <input type="tel" id="mobileno" (keyup)="updatephone($event)"  placeholder="9874512630" maxlength="10" [(ngModel)]="phone_number">
+     </ion-col >
+     <ion-col size="4"><ion-button (click)="CheckPhoneNumber()" class="receipt-btn">Search</ion-button></ion-col>
+   </ion-row> 
+  </div>
+
+  <div *ngIf="historyData.length>0">
+    <ion-item *ngFor="let data of historyData">
+      <ion-label class="ion-text-wrap">
+        <ion-text >
+          <h3>#{{data.order_number}}</h3>
+        </ion-text>
+        <p>{{data.delivery_date}}</p>
+          <ion-text >
+        <h5>{{data.status}}</h5>
+      </ion-text>
+       </ion-label>
+       <ion-button fill="outline" slot="end" class="receipt-history-btn"  (click)="download(data)">Reciept</ion-button>
+    </ion-item>
+     <!-- <ion-row class="cart-list">
+    <ion-col size="1">
+     <p class="count">2</p>
+    </ion-col>
+    <ion-col size="5">
+      <div class="product-img">
+        <img src="../../assets/images/Banana.png"/>
+        <h4>Banana X 1Kg</h4>
+      </div>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+  </ion-row> -->
+  <!-- <ion-row class="cart-list">
+    <ion-col size="1">
+     <p class="count">3</p>
+    </ion-col>
+    <ion-col size="5">
+      <div class="product-img">
+        <img src="../../assets/images/Tomatos.png"/>
+        <h4>Banana X 1Kg</h4>
+      </div>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+  </ion-row> -->
+
+
+</div> 
+  
+<div>
+<p text-center *ngIf="historyData.length==0 && noData"> No History Found.</p>
+</div>
+</ion-content>

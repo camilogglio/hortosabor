@@ -22,6 +22,18 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" >
+            <!-- <a  style="text-decoration: :=none;"> -->
+            <ion-item (click)="openterms()"> 
+              <!-- [ngClass]="{'active': selectedItem == p.url}" -->
+              <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <img class="menu-icon-img" src="../assets/images/Terms&Conditions.png" >
+              <ion-label >
+                Terms & Conditions
+              </ion-label>
+            </ion-item>
+          <!-- </a> -->
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>

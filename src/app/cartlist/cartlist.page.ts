@@ -54,7 +54,7 @@ export class CartlistPage implements OnInit {
     console.log(this.selectedData);
   }
   add_quantity() {
-    console.log(this.selectedData, "selected Product");
+    console.log(this.selectedData, "selected Product",Object.keys(this.selectedData).length);
     if (Object.keys(this.selectedData).length) {
       this.selectedData.quantity = this.cart.addQuantity(this.selectedData.quantity);
       console.log(this.selectedData.quantity, "Qunatiyt", "++++++++++", this.cartList, "cartDAta");
@@ -96,6 +96,7 @@ export class CartlistPage implements OnInit {
       console.log(this.cartList);
       localStorage.setItem("cart_data", JSON.stringify(this.cartList));
       this.total = this.cart.calculateTotal();
+      this.selectedData ={};
       // this.cartList = JSON.parse(localStorage.getItem('cart_data'));
     } else {
       this.api.presentToast('Please first select a product to remove from cart');

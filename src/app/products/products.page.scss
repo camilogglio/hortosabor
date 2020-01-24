@@ -8,7 +8,7 @@ ion-title{
 }
 
 ion-icon {
-    color: #0d0c0c;
+    color: #fff;
     font-size: 20px;
 }
 .products{
@@ -114,7 +114,7 @@ ion-searchbar{
     color:#fff;
     margin-top:0;
     text-align: center;
-    padding-right: 7px;
+    padding-right: 15px;
 }
 img.arrow {
     width: 15px;
@@ -178,4 +178,48 @@ img.arrow{
         color: #fff;
         font-size: 18px;
     }
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation : portrait) {
+        .product-slider h2 {
+            font-size: 24px;
+        }
+        .product-slider .slider-arrow{
+            padding: 10px !important;
+        }
+        .slide_text{
+            font-size: 18px !important;
+        }
+        .price h4 {
+            // font-size: 24px;
+        }
+        .product-slider p{
+            // font-size: 14px;
+        }
+        .price-button h3 {
+            color: #fff;
+            font-size: 24px;
+        }
+        .slider-arrow ion-icon {
+            color: #fff;
+            font-size: 26px;
+        }
+        .btn-cart .cart-icon{
+            color: #fff;
+            margin-top: 0px;
+            font-size: 40px;
+            float: none;
+            vertical-align: middle;
+            padding-right: 32px;
+        }
+        .btn-cart{
+            line-height: 50px;
+          
+        }
+        ion-icon {
+            font-size: 26px;
+        }
+        .cart_quantity {
+            font-size: 23px;
+            vertical-align: middle;
+        }
     }

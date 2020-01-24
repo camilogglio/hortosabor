@@ -30,25 +30,25 @@
         top: 1%;
         left: 8px;
         z-index: 2;
-        background: #ffffff;
+        background: #f16000;
         line-height: 10px;
         padding: 4px;
-        color: #292929;
+        color: #fff;
         text-align: center;
         border-radius: 4px;" class="slider-arrow" (click)="slidePrev($event)">
-          <ion-icon name="ios-arrow-back"></ion-icon><span style="font-size: 12px;    vertical-align: super;">Prev</span>
+          <ion-icon name="ios-arrow-back"></ion-icon><span class="slide_text" style="font-size: 12px;    vertical-align: super;">Prev</span>
         </div>
         <div style="    position: absolute;
         top: 1%;
         right: 8px;
         z-index: 2;
-        background: #ffffff;
+        background: #f16000;
         line-height: 10px;
         padding: 4px;
-        color: #292929;
+        color: #fff;
         text-align: center;
         border-radius: 4px;" class="slider-arrow" (click)="slideNext($event)">
-          <span style="font-size: 12px;    vertical-align: super;">Next</span><ion-icon name="ios-arrow-forward"></ion-icon>
+          <span class="slide_text" style="font-size: 12px;    vertical-align: super;">Next</span><ion-icon name="ios-arrow-forward"></ion-icon>
         </div>
         <ion-spinner name="lines"  *ngIf="spinnerStatus ==false" text-center style="margin: 0 auto;
         width: 100%;
@@ -56,7 +56,7 @@
         margin-top: 50px;"></ion-spinner>
       <ion-slides #productSlide [options]="slideOptsOne" (ionSlideDidChange)="getIndex()">
       <ion-slide *ngFor="let proData of products let i =index"  id="{{i}}">        
-        <img  src="{{proData.images[0]}}"/>
+        <img  src="{{proData.images[0]}}" (click)= "presentModal(proData)"/>
       </ion-slide>
 <!-- 
       <ion-slide> 
@@ -85,7 +85,7 @@
         <ion-row>
           <ion-col size="8" text-left class="cart-input">
             <!-- <ion-input type="checkbox"></ion-input> -->
-            {{quantity}}
+            <span class="cart_quantity"> {{quantity}}</span>
             <div class="up-down-arrow">
             <ion-icon name="arrow-dropup" ios="ios-arrow-dropup" md="md-arrow-dropup" color="dark" (click)="addQuantity()"></ion-icon>
             <ion-icon name="arrow-dropdown" ios="ios-arrow-dropdown" md="md-arrow-dropdown" color="dark" (click)="removeQuantity()"></ion-icon>
@@ -93,7 +93,7 @@
             <!-- <img src="../../assets/images/arrow.png" class="arrow"/> -->
           </ion-col>
           <ion-col size="4" text-right class="ion-cart" (click)="addCart()">
-            <ion-icon name="cart"></ion-icon>
+            <ion-icon name="cart" class="cart-icon">  </ion-icon>
           </ion-col>
         </ion-row>
       </div>

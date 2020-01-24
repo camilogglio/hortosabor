@@ -45,6 +45,14 @@ ion-menu-button {
 .dialcodephone .intl-tel-input input,.dialcodephone .intl-tel-input input[type=text],.dialcodephone .intl-tel-input input[type=tel] {   
     padding-left: 55px !important;
 }
+.calender-section .modal-wrapper {
+  height: 75%;
+  width: 90%;
+  -webkit-transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 40px, 0);
+  opacity: 0.01;
+  border-radius: 0px;
+ }
 .dialcodephone .intl-tel-input {
     width: 100% !important;
     margin-left: 10px !important;
@@ -327,4 +335,6 @@ ion-menu-button {
         background-position: 2px -328px, 330px -84px;
       }
     }
+  
+    
   /* **** **** **** **** **** **** **** **** **** */

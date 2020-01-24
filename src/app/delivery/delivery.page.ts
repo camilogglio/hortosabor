@@ -34,21 +34,55 @@ export class DeliveryPage implements OnInit {
     public router: Router,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
-    public events: Events
-   
+    public events: Events   
   ) { 
+    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
+      this.selectedPlace =  JSON.parse(localStorage.getItem('deliveryData')).place;
+      // this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+      this.getDeliveryPlaces1();
+      setTimeout(()=>{
+        var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+        console.log('result:- ', result);
+        if(result.length>0){
+          this.selectedPlaceDate = result[0];
+          this.selectedDate = '';
+          this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+          this.changeDeleveryTime();
+        }
+      },1000)
+    }
     this.events.subscribe('delivery:created', (time) => {
       this.selectedDate ='';
-      this.selectedPlace = ''
+      this.selectedPlace = '';
+      this.comments = '';
+      this.intervalDate =[];
     });
- ;
   }
 
   ngOnInit() { 
     this.getDeliveryPlaces();
     this.loadMap();
   }
-
+  ionViewDidEnter(){
+      if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
+        this.selectedPlace =  JSON.parse(localStorage.getItem('deliveryData')).place;
+        // this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+        this.getDeliveryPlaces1();
+        setTimeout(()=>{
+          var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+          console.log('result:- ', result);
+          if(result.length>0){
+            this.selectedPlaceDate = result[0];
+            this.selectedDate = '';
+            this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+            this.changeDeleveryTime();
+          }
+        },1000)
+      }
+      if(JSON.parse(localStorage.getItem('comment')) && JSON.parse(localStorage.getItem('comment'))!=undefined){
+        this.comments = JSON.parse(localStorage.getItem('comment')); 
+      }
+    }
   loadMap(lat?: any, lng?: any) {
     if(lat && lng) {
       this.initMap(lat, lng);
@@ -120,6 +154,7 @@ export class DeliveryPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
+            this.selectedPlace = JSON.parse(localStorage.getItem('deliveryData')).place;
             console.log('Confirm Cancel: blah');
           }
         }, {
@@ -141,7 +176,7 @@ export class DeliveryPage implements OnInit {
     this.api.get(url, params).subscribe(data => {
       setTimeout(() => {
         this.api.hideLoader();
-      }, 100);
+      }, 1000);
       console.log('Places res:- ', data);
       if (data.locations) {
         this.places = data.locations;
@@ -149,21 +184,43 @@ export class DeliveryPage implements OnInit {
     }, err => {
       setTimeout(() => {
         this.api.hideLoader();
-      }, 100);
+      }, 1000);
       console.log('Places err:- ', err);
     });
   }
-
+  getDeliveryPlaces1() {
+    // this.api.showLoader();
+    const url = '/locations';
+    const params = {};
+    this.api.get(url, params).subscribe(data => {
+ 
+      console.log('Places res:- ', data);
+      if (data.locations) {
+        this.places = data.locations;
+      }
+    }, err => {
+    
+      console.log('Places err:- ', err);
+    });
+  }
   changeDeliveryPlace(evt) {   
     this.selectedPlaceDate = {};
     console.log('selected delivery:- ', this.selectedPlace,JSON.parse(localStorage.getItem('deliveryData')));
     if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
       if(this.selectedPlace != JSON.parse(localStorage.getItem('deliveryData')).place){
         console.log("ifffffffffffffffffff")
+        var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+        console.log('result:- ', result);
+        if(result.length>0){
+          this.selectedPlaceDate = result[0];
+          this.selectedDate = '';
+          this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+          // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+          this.changeDeleveryTime();
+        }
         if(localStorage.getItem('cart_data') && JSON.parse(localStorage.getItem('cart_data')).length>0){
           this.presentAlertPrompt();
-        }
-       
+        }       
       }else{
         console.log("elsssssssssssss")
         var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
@@ -202,11 +259,16 @@ export class DeliveryPage implements OnInit {
 
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
+
     console.log('timeInt', this.timeInterval, this.timeInterval + '-' + month + '-' + year, new Date(this.timeInterval + '-' + month + '-' + year));
     var that = this;
     this.hours.forEach(element => {
       that.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0' + month) + '-' + year + ' ' + element);
     });
+    console.log(this.intervalDate,"hours");
+    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
+    this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+    }
     // this.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0'+month) + '-' + year);
     this.api.hideLoader();
     setTimeout(() => {
@@ -232,6 +294,8 @@ export class DeliveryPage implements OnInit {
         params.comment = this.comments;
       }
       localStorage.setItem('deliveryData', JSON.stringify(params));
+      localStorage.setItem('comment', JSON.stringify(params.comment));
+      // console.log(JSON.parse(localStorage.getItem('comment')))
       // this.navCtrl.navigateForward('/products', params);
       const navigationExtras: NavigationExtras = {
         queryParams: {

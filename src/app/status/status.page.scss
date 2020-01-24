@@ -31,6 +31,20 @@ ion-icon {
     width: 86%;
     height:48px;
 }
+.status-download {
+  text-align: center;
+}
+.status-download ion-button{
+  --background: #f16000;
+    background: #f16000;
+    border-radius: 10px;
+    border: 1px solid #f16000 !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding-left: 0 !important;
+    color: #fff;
+    box-shadow: none !important;
+}
 $font-stack: 14px/14px Helvetica, sans-serif;
 $primary-color: #FF6699;
 $base-color: #bbb;
@@ -129,7 +143,14 @@ $break-small: 480px;
     left: auto;
     top: 48%;
   }
-
+ .order-number table{
+   width: 90%;
+   margin: 20px;
+ }
+ .order-number table tr td{
+ border: 0.5px solid #b5b0b0;
+ padding: 8px;
+}
   @media (max-width:320px){
     .order-number h2{
        font-size: 24px;

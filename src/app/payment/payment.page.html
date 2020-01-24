@@ -54,28 +54,33 @@
     </ion-row>
   </div>
 <div  class="payment-form">
+  <h4 text-center class="payment_invoiceheading">Information for the invoice</h4>
   <div class="user-info">
     <form [formGroup]="cardForm" autocomplete="on" >
     <ion-row>
       <ion-col size="6">
         <ion-input type="text" placeholder="Name"  formControlName="name"></ion-input>
-        <p class="payment-error" *ngIf="!cardForm.controls.name.valid  && (cardForm.controls.name.dirty || submitAttempt)">Name is required</p>
+        <p class="payment-error" *ngIf="cardForm.get('name').hasError('required') && cardForm.get('name').touched">Name is required</p>
           </ion-col>
+          <ion-col size="6">
+            <ion-input type="email" placeholder="Email"  formControlName="email"></ion-input>
+            <p class="payment-error" *ngIf="cardForm.get('email').hasError('required') && cardForm.get('email').touched">Email address is required</p>
+            <p class="payment-error" *ngIf="cardForm.get('email').hasError('pattern') && cardForm.get('email').touched">Invalid email address.</p>
+          </ion-col>
+          
       <ion-col size="6">
-        <input type="tel" placeholder="Phone"  formControlName="phone" maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"/>
+        <input id="phone-no" type="hidden" placeholder="Mobile" formControlName="dailcode" class="signupdailcode">
+        <input type="tel" id="mobileno" formControlName="phone" (keyup)="updatephone($event)"  placeholder="9874512630" maxlength="10" >
+        <!-- <input type="tel" placeholder="Phone"  formControlName="phone" maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"/> -->
         <p class="payment-error" *ngIf="cardForm.get('phone').hasError('required') && cardForm.get('phone').touched">Phone number is required</p>
-        <p class="payment-error"  *ngIf="cardForm.controls.phone.hasError('pattern')">Invalid phone number.</p>
+        <!-- <p class="payment-error"  *ngIf="cardForm.controls.phone.hasError('pattern')">Invalid phone number.</p> -->
       </ion-col>
-      <ion-col size="6">
-        <ion-input type="email" placeholder="Email"  formControlName="email"></ion-input>
-        <p class="payment-error" *ngIf="cardForm.get('email').hasError('required') && cardForm.get('email').touched">Email address is required</p>
-        <p class="payment-error" *ngIf="cardForm.get('email').hasError('pattern') && cardForm.get('email').touched">Invalid email address.</p>
-      </ion-col>
+     
       <ion-col size="6">
         <ion-input type="number" placeholder="Local ID Number"  formControlName="local_id"></ion-input>
         <ion-input type="text" placeholder="Delivery Address" disabled formControlName="delivery_address" style="display: none;"></ion-input>
         <ion-input type="text" placeholder="Delivery Date"  disabled formControlName="delivery_date" style="display: none;"></ion-input>
-        <p class="payment-error" *ngIf="!cardForm.controls.local_id.valid  && (cardForm.controls.local_id.dirty || submitAttempt)">Local ID is required</p>
+        <p class="payment-error" *ngIf="cardForm.get('local_id').hasError('required') && cardForm.get('local_id').touched">Local ID is required</p>
       </ion-col>
     </ion-row>
     </form>
@@ -124,7 +129,7 @@
         placeholder="MM/YYYY"
         (ionChange)="check()"
          ></ion-datetime>
-         <p class="payment-error" *ngIf="!paymentForm.controls.expDate.valid  && (paymentForm.controls.expDate.dirty || submitAttempt)">Please enter a valid expiration date</p>
+         <p class="payment-error" *ngIf="paymentForm.get('expDate').hasError('required') && paymentForm.get('expDate').touched">Please enter a valid expiration date</p>
         </li>
         <li style="display: none;" >
           <label for="cardExpirationMonth">Expiration month:</label>
@@ -140,7 +145,7 @@
         <li>
           <label for="cardholderName">Card Holder Name:</label>
           <input type="text" id="cardholderName" data-checkout="cardholderName" placeholder="Enter Card Holder Name" value="APRO" formControlName="cardname" />
-          <p class="payment-error" *ngIf="!paymentForm.controls.cardname.valid  && (paymentForm.controls.cardname.touched)">Card Holder Number is required</p>
+          <p class="payment-error" *ngIf="!paymentForm.controls.cardname.valid  && (paymentForm.controls.cardname.touched)">Card Holder Name is required</p>
        
         </li>     
       </ul>

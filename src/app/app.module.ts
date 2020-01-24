@@ -17,7 +17,9 @@ import { IonicStorageModule } from '@ionic/storage';
 import { NavController, NavParams } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
-
+import { ProductdetailsPageModule } from '../app/productdetails/productdetails.module';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,11 +31,14 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ProductdetailsPageModule,
     IonicStorageModule.forRoot(),
   ],
   providers: [
     StatusBar,
     SplashScreen, Geolocation, NativeGeocoder,
+    FileTransfer,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

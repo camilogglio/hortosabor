@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ApiService } from '../api.service';
-import { Platform ,Events} from '@ionic/angular';
+import { Platform ,Events, NavController} from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router,ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -23,6 +23,7 @@ export class PaymentPage implements OnInit {
   index:any='';
   selectedData: any = {};
   navData:any='';
+  comments:any='';
   submitAttempt: boolean = false;
   minDate = new Date().getFullYear();
   date = (new Date().getFullYear()+5) +'-'+(new Date().getMonth()+1)+'-'+new Date().getDate();
@@ -31,7 +32,7 @@ export class PaymentPage implements OnInit {
   doSubmit = false;
   token :any='';
   products:any=[];
-  constructor(public events:Events,public cart: CartService, public api: ApiService,    public formBuilder: FormBuilder, public route:ActivatedRoute, public router:Router) {
+  constructor(public events:Events,public cart: CartService, public api: ApiService,public navCtrl:NavController,public formBuilder: FormBuilder, public route:ActivatedRoute, public router:Router) {
     this.activeImage =true;
     console.log(this.date);
     Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
@@ -39,10 +40,11 @@ export class PaymentPage implements OnInit {
     this.total = this.cart.calculateTotal();
     this.cardForm = this.formBuilder.group({
       name: ["", Validators.compose([Validators.required])],
-      phone: ["", Validators.compose([Validators.required,Validators.pattern('[1-9]{1}[0-9]{9}')])],
+      phone: ["", Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
       delivery_address:[''],
       delivery_date:[''],
+      dailcode:[''],
       local_id: ["", Validators.compose([Validators.required])]
     });
   
@@ -68,18 +70,41 @@ export class PaymentPage implements OnInit {
       });
       console.log(this.products);
     }
-  }
-  this.route.queryParams.subscribe(params => {
-    if (params && params.value) {
-      this.navData = JSON.parse(params.value);
-      console.log(this.navData);
-      this.cardForm.controls.delivery_address.setValue(this.navData.place)
-      this.cardForm.controls.delivery_date.setValue(this.navData.deliveryDate)
+    // console.log(localStorage.getItem('comment'));
+    if(localStorage.getItem('comment')!='undefined'){
+      this.comments = JSON.parse(localStorage.getItem('comment')); 
+    }else{
+      this.comments = '';
     }
-  });
+  }
+  // this.route.queryParams.subscribe(params => {
+  //   if (params && params.value) {
+  //     this.navData = JSON.parse(params.value);
+  //     console.log(this.navData);
+  //     this.cardForm.controls.delivery_address.setValue(this.navData.place)
+  //     this.cardForm.controls.delivery_date.setValue(this.navData.deliveryDate)
+  //   }
+  // });
+  if(JSON.parse(localStorage.getItem('deliveryData'))){  
+    this.cardForm.controls.delivery_address.setValue(JSON.parse(localStorage.getItem('deliveryData')).place)
+    this.cardForm.controls.delivery_date.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryDate)
+  }
 }
 
   ngOnInit() {
+    $(".accordion__answer:first").show();
+    $(".accordion__question:first").addClass("expanded");
+    // var phone = document.getElementById("mobileno");
+    setTimeout(() => {
+      $("#mobileno").intlTelInput({
+        hiddenInput: "phone-no",
+        initialCountry: "gb",
+        utilsScript: "assets/js/utils.js"
+      });
+      // $("#mobileno").usPhoneFormat();
+    }, 100);
+
+    // document.getElementById("role-button1").classList.add("btn-activated");
   }
   check(){
     console.log(this.paymentForm.value.expDate);
@@ -150,6 +175,14 @@ export class PaymentPage implements OnInit {
     }
   };
   doPay(){ 
+    var phone = document.getElementById("mobileno");
+    var country = $(phone).intlTelInput("getSelectedCountryData").dialCode;
+    if (this.cardForm.value.phone) {
+      console.log("+" + country);
+      var dialcode = "+" + country;
+    }
+    var full_number = dialcode + this.cardForm.value.phone;
+    console.log(full_number);
     this.api.showLoader();
     event.preventDefault();
     var that =this;
@@ -161,35 +194,37 @@ export class PaymentPage implements OnInit {
         product: this.products,
         delivery_address: that.cardForm.value.delivery_address,
         delivery_date:that.cardForm.value.delivery_date,
-        phone_number:that.cardForm.value.phone,
+        phone_number:full_number,
         email:that.cardForm.value.email,
         local_id:that.cardForm.value.local_id,
         total_price:that.total,                
         payment_type :'card',
-        name: this.cardForm.value.name
+        name: this.cardForm.value.name,
+        comment:this.comments,
       };
       Mercadopago.clearSession();
       var $form = document.querySelector('#pay');
       console.log( $form , params)
       // Mercadopago.createToken($form, this.sdkResponseHandler); // The function "sdkResponseHandler" is defined below
-      Mercadopago.createToken($form, (res,data) => {
-       
+      Mercadopago.createToken($form, (res,data) => {      
+        setTimeout(()=>{
+          this.api.hideLoader();
+        },1000)
          that.token = data.id;
           console.log('token', that.navData ,data );
-          if(data.cause){
-            this.api.hideLoader();
+          if(data.cause){          
             if(data.cause[0].code =="E301"){
+          
               this.api.presentToast('Invalid Card Number')
             }
             if(data.cause[0].code =="E302"){
               this.api.presentToast('Invalid CVV Number')
             }
           }else{
-           
             params.token =  that.token;      
             console.log(params, "parmas");
             this.api.post(url, params).subscribe(data => {
-              this.api.hideLoader();
+           
               console.log('res:- ', data);
               if(data.error){
                 this.api.presentToast(data.error.message);
@@ -197,11 +232,11 @@ export class PaymentPage implements OnInit {
                 this.api.presentToast(data.success);
                 this.cardForm.reset();
                 this.paymentForm.reset();
-                localStorage.removeItem('deliveryData');
+                // localStorage.removeItem('deliveryData');
                 localStorage.removeItem('cart_data');
                 
                 this.events.publish('delivery:created', Date.now());
-                this.router.navigate(['/delivery'])
+                this.router.navigate(['/status'],{ queryParams: { value: JSON.stringify(data.verify_number) } });
               }
               
              
@@ -218,7 +253,13 @@ export class PaymentPage implements OnInit {
       });
     }
 };
-
+updatephone(evn){
+  console.log(evn.target.value);
+  var s =evn.target.value;
+  var t=s.replace(/^0+/, '');
+  console.log(t);
+  this.cardForm.controls.phone.setValue(t)
+}
 
   validateCard(card) {
     console.log(card)
@@ -282,18 +323,27 @@ export class PaymentPage implements OnInit {
     $('input[formControlName="cardnumber"]').val(formatVal);
   }
   confirm_payment(){
+    var phone = document.getElementById("mobileno");
+    var country = $(phone).intlTelInput("getSelectedCountryData").dialCode;
+    if (this.cardForm.value.phone) {
+      console.log("+" + country);
+      var dialcode = "+" + country;
+    }
+    var full_number = dialcode + this.cardForm.value.phone;
+    console.log(full_number);
     const url = '/orders';
     const params = {
       product: this.products,
       delivery_address: this.cardForm.value.delivery_address,
       delivery_date:this.cardForm.value.delivery_date,
-      phone_number:this.cardForm.value.phone,
+      phone_number:full_number,
       email:this.cardForm.value.email,
       local_id:this.cardForm.value.local_id,
       total_price:this.total,
       token:'',
       payment_type :'cash',
-      name: this.cardForm.value.name
+      name: this.cardForm.value.name,
+      comment :this.comments,
     };
     console.log(params, "parmas");
     this.api.post(url, params).subscribe(data => {
@@ -302,9 +352,10 @@ export class PaymentPage implements OnInit {
           this.cardForm.reset();
           this.paymentForm.reset();
           localStorage.removeItem('cart_data');
-          localStorage.removeItem('deliveryData');
+          // localStorage.removeItem('deliveryData');
+          // localStorage.removeItem('comment');
           this.events.publish('delivery:created', Date.now());
-          this.router.navigate(['/delivery'])
+          this.navCtrl.navigateRoot(['/status'],{ queryParams: { value: JSON.stringify(data.verify_number) } });
       // if (data.search.length > 0) {
       //   this.searchResult = data.search;
       // } else {
