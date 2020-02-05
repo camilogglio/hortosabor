@@ -4,6 +4,7 @@ import { AlertController,Events} from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 declare var $:any;
 @Component({
   selector: 'app-history',
@@ -16,14 +17,16 @@ export class HistoryPage implements OnInit {
   dial_code:any='';
   noData:boolean;
   timestamp:any='';
-  constructor(public route:ActivatedRoute,public api:ApiService, public alertController:AlertController, public events:Events,private transfer: FileTransfer, private file: File) { 
+  constructor(public translate: TranslateService,public route:ActivatedRoute,public api:ApiService, public alertController:AlertController, public events:Events,private transfer: FileTransfer, private file: File) { 
+    this.historyData=[];
+    this.noData = false;
   }
   ngOnInit() {
     $(".accordion__answer:first").show();
     $(".accordion__question:first").addClass("expanded");
     // var phone = document.getElementById("mobileno");
     setTimeout(() => {
-      $("#mobileno").intlTelInput({
+      $("#historymobileno").intlTelInput({
         hiddenInput: "phone-no",
         initialCountry: "gb",
         utilsScript: "assets/js/utils.js"
@@ -33,15 +36,18 @@ export class HistoryPage implements OnInit {
 
   }
     ionViewDidEnter(){
-      this.phone_number ='';
+    this.phone_number ='';
     this.historyData=[];
+    this.noData = false;
   }
   CheckPhoneNumber(){
     console.log(this.phone_number, "phonenumner")
       if(this.phone_number !=''){
         this.orderHistory();
       }else{
-        this.api.presentToast("Phone Number is required.")
+        // this.api.presentToast("Phone Number is required.")
+        var message = this.translate.defaultLang == 'es' ? 'Número de teléfono requerido.' : 'Phone Number is required.' ;
+        this.api.presentToast(message);
       }
   }
   updatephone(evn){
@@ -62,12 +68,16 @@ export class HistoryPage implements OnInit {
       .then(_ => {
         console.log("iff")
           fileTransfer.download(finalurl, this.file.externalDataDirectory  + 'downloads/status_'+data.order_number+'_'+this.timestamp+'.pdf').then((entry) => {
-            this.api.presentToast('File saved in :  ' + entry.nativeURL);
+            
+            var message = this.translate.defaultLang == 'es' ? 'Archivo guardado en: ' : 'File saved in : ' ;
+            this.api.presentToast(message + entry.nativeURL);
             let url = entry.toURL();
            
           })
           .catch((err) =>{
-            alert('Error saving file: ' + err.message);
+            var message = this.translate.defaultLang == 'es' ? 'Error al guardar el archivo: ' : 'Error saving file : ' ;
+            this.api.presentToast(message + err.message);
+            // alert('Error saving file: ' + err.message);
           })
         }
       )
@@ -75,20 +85,26 @@ export class HistoryPage implements OnInit {
         // Directory does not exists, create a new one
         err => this.file.createDir(this.file.externalDataDirectory , 'downloads', false)
         .then(response => {
-          this.api.presentToast('New folder created:  ' + response.fullPath);
+          this.api.presentToast(' created:  ' + response.fullPath);
           fileTransfer.download(finalurl, this.file.externalDataDirectory  + 'downloads/status_'+data.order_number+'_'+this.timestamp+'.pdf').then((entry) => {
-              alert('File saved in : ' + entry.nativeURL);
+              //alert('File saved in : ' + entry.nativeURL);
+              var message = this.translate.defaultLang == 'es' ? 'Archivo guardado en: ' : 'File saved in : ' ;
+            this.api.presentToast(message + entry.nativeURL);
             })
             .catch((err) =>{
-              alert('Error saving file:  ' + err.message);
+              //alert('Error saving file:  ' + err.message);
+              var message = this.translate.defaultLang == 'es' ? 'Error al guardar el archivo: ' : 'Error saving file : ' ;
+              this.api.presentToast(message + err.message);
             });		
         }).catch(err => {
-          alert('It was not possible to create the dir "downloads". Err: ' + err.message);
+          var message = this.translate.defaultLang == 'es' ? 'No fue posible crear el directorio "descargas". Errar: ' : 'It was not possible to create the dir "downloads". Err : ' ;
+            this.api.presentToast(message + err.nativeURL);
+          // alert('It was not possible to create the dir "downloads". Err: ' + err.message);
         })			
       );  
     }
   orderHistory(){
-  var phone = document.getElementById("mobileno");
+  var phone = document.getElementById("historymobileno");
     var country = $(phone).intlTelInput("getSelectedCountryData").dialCode;
     if (this.phone_number) {
       console.log("+" + country);

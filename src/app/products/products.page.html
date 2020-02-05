@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title text-left>Products</ion-title>
+    <ion-title text-left>{{'products' | translate}}</ion-title>
     <ion-buttons slot="end">
       <!-- <ion-icon name="search"></ion-icon>
       <ion-icon name="md-more"></ion-icon> -->
@@ -14,7 +14,7 @@
 <ion-content>
   <div class="products">
      <div class="search">
-      <ion-searchbar [(ngModel)]="product_search" placeholder="Search" lines="none" (keyup)="searchProduct(product_search)" (ionClear)="onCancel($event)"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="product_search" placeholder="{{'search' |translate}}" lines="none" (keyup)="searchProduct(product_search)" (ionClear)="onCancel($event)"></ion-searchbar>
      </div>
   </div>
   <div *ngIf="searchResult.length>0">
@@ -36,7 +36,7 @@
         color: #fff;
         text-align: center;
         border-radius: 4px;" class="slider-arrow" (click)="slidePrev($event)">
-          <ion-icon name="ios-arrow-back"></ion-icon><span class="slide_text" style="font-size: 12px;    vertical-align: super;">Prev</span>
+          <ion-icon name="ios-arrow-back"></ion-icon><span class="slide_text" style="font-size: 12px;    vertical-align: super;">{{'back' |translate}}</span>
         </div>
         <div style="    position: absolute;
         top: 1%;
@@ -48,7 +48,7 @@
         color: #fff;
         text-align: center;
         border-radius: 4px;" class="slider-arrow" (click)="slideNext($event)">
-          <span class="slide_text" style="font-size: 12px;    vertical-align: super;">Next</span><ion-icon name="ios-arrow-forward"></ion-icon>
+          <span class="slide_text" style="font-size: 12px;    vertical-align: super;">{{'next' |translate}}</span><ion-icon name="ios-arrow-forward"></ion-icon>
         </div>
         <ion-spinner name="lines"  *ngIf="spinnerStatus ==false" text-center style="margin: 0 auto;
         width: 100%;
@@ -111,7 +111,7 @@
        
     </div>
 
-    <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo('/cartlist')">SEE CART LIST</ion-button>
+    <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo('/cartlist')" style="text-transform: uppercase;">{{'cart_list' |translate}}</ion-button>
   </div>
   </div>
 </ion-content>

@@ -3,22 +3,35 @@
     <ion-menu  contentId="main-content" type="overlay">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <ion-title>{{'menu' | translate}}</ion-title>
           <ion-buttons slot="end">
-            <ion-icon name="close" (click)="closemenu()"></ion-icon>
+          <ion-icon name="close" (click)="closemenu()"></ion-icon>
           </ion-buttons>
         </ion-toolbar>
         
       </ion-header>
       <ion-content class="ion-menu-content">
         <ion-list class="ion-menu-list">
+
+          <ion-menu-toggle auto-hide="false" >
+            <!-- <a  style="text-decoration: :=none;"> -->
+            <ion-item (click)="open()"> 
+              <!-- [ngClass]="{'active': selectedItem == p.url}" -->
+              <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <img class="menu-icon-img" src="../assets/images/Products.png" >
+              <ion-label >
+              {{'products' |translate}}
+              </ion-label>
+            </ion-item>
+          <!-- </a> -->
+          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item (click)="gotoPage(p.url)"> 
               <!-- [ngClass]="{'active': selectedItem == p.url}" -->
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
               <img class="menu-icon-img" [src]="p.icon" >
               <ion-label >
-                {{p.title}}
+                {{p.title | translate}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -29,11 +42,21 @@
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
               <img class="menu-icon-img" src="../assets/images/Terms&Conditions.png" >
               <ion-label >
-                Terms & Conditions
+                {{'terms_conditions' |translate}}
               </ion-label>
             </ion-item>
           <!-- </a> -->
           </ion-menu-toggle>
+          <!-- <ion-menu-toggle>
+            <ion-item>
+              <ion-label>{{'language'|translate}}</ion-label>
+              <ion-select placeholder="Select" [(ngModel)]="langValue" (ionChange)="selectLang()">
+                <ion-select-option value="en">English</ion-select-option>
+                <ion-select-option value="es">Spanish</ion-select-option>
+              </ion-select>
+            </ion-item>
+          
+          </ion-menu-toggle> -->
         </ion-list>
       </ion-content>
     </ion-menu>

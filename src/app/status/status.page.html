@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title text-left>Status</ion-title>
+    <ion-title text-left>{{'status'| translate}}</ion-title>
     <ion-buttons slot="end">
       <!-- <ion-icon name="search"></ion-icon>
       <ion-icon name="md-more"></ion-icon> -->
@@ -13,19 +13,20 @@
 
 <ion-content>
   <div class="order-number">
-    <h2 text-center>{{ordersData?.order_number}}</h2>
+    <h3 text-center  *ngIf="ordersData.length !=0">Número de orden</h3>
+    <h2 text-center  *ngIf="ordersData.length !=0">{{ordersData?.order_number}}</h2>
     <table  *ngIf="ordersData.length !=0">
       <tbody>
         <tr>
-          <td>Delivery Address</td>
+          <td>{{'delivery-address' | translate}}</td>
           <td>{{ordersData?.delivery_address?.name}}</td>
         </tr>
         <tr>
-          <td>Delivery Date</td>
+          <td>{{'delivery-date' | translate}}</td>
           <td>{{ordersData?.delivery_date }}</td>
         </tr>
         <tr *ngIf="ordersData?.comment !=''">
-          <td>comment</td>
+          <td>{{'comment' | translate}}</td>
           <td>{{ordersData?.comment }}</td>
         </tr>
         
@@ -49,7 +50,7 @@
     
   </div>
   <div class="track-order">
-    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Order received' || ordersData.length==0"/>
+    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Order received' || ordersData.length==0 || ordersData?.status=='Orden recibida'"/>
     <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Preparing'" style="left: 195px !important;"/>
     <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='On the way'" style="left: 195px !important;"/>
     <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Delivered'" style="left: 359px !important;"/>
@@ -70,14 +71,14 @@
     </ol>
     <img src="../../assets/images/flag.png" class="flag"/>
     <p text-center style="    color: #00b84c;
-    margin: 0px;" *ngIf="ordersData">{{ordersData?.status}}</p>
+    margin: 0px;" *ngIf="ordersData">{{ordersData?.status |translate}}</p>
      <p text-center style="    color: #00b84c;
      margin: 0px;" *ngIf="ordersData.length==0">{{status}}</p>
-     
-    
-   </div>
+     </div>
+     <p text-center  *ngIf="ordersData.length!=0" class="order-status-p">Consultas por whatsapp al +54 3329 494176</p>
+ 
    <!-- <div  class="status-download" *ngIf="ordersData ">
     <ion-button (click)="download()">Download</ion-button>
     </div> -->
-  <ion-button expand="block" class="ready-togobtn" *ngIf="ordersData.length !=0" (click)="download()">READY TO GO</ion-button>
+  <ion-button expand="block" class="ready-togobtn" *ngIf="ordersData.length !=0" (click)="download()">{{'download' | translate}}</ion-button>
 </ion-content>

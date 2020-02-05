@@ -15,10 +15,10 @@
       <div class="agree">
         <div class="form-group">
           <input type="checkbox" id="agree" [(ngModel)]="terms" (change)="agreeTerms()">
-          <label for="agree">I agree to the terms & conditions.</label>
+          <label for="agree">{{'accept_terms_conditions' | translate}}</label>
         </div>
       </div>
-      <ion-button expand="block" (click)="enter()">Enter</ion-button>
+      <ion-button expand="block" (click)="enter()">{{'enter' | translate}}</ion-button>
     </div>
   </div>
 

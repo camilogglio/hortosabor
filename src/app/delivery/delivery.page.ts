@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController,AlertController,Events } from '@ionic/angular';
+import { NavController, AlertController, Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../api.service';
 import { Router, RouterEvent, NavigationEnd, NavigationExtras } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { TranslateService } from '@ngx-translate/core';
 // import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 declare var google;
 @Component({
@@ -27,68 +28,71 @@ export class DeliveryPage implements OnInit {
   comments: any = '';
   hours: any = ['10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM', '07:00 PM'];
   constructor(
-    public alertController:AlertController,
+    public alertController: AlertController,
     public navCtrl: NavController,
     public storage: Storage,
     public api: ApiService,
     public router: Router,
+    public translate: TranslateService,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
-    public events: Events   
-  ) { 
-    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
-      this.selectedPlace =  JSON.parse(localStorage.getItem('deliveryData')).place;
+    public events: Events,
+  ) {
+    if (JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData')) != undefined) {
+      this.selectedPlace = JSON.parse(localStorage.getItem('deliveryData')).place;
+
       // this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
       this.getDeliveryPlaces1();
-      setTimeout(()=>{
+      setTimeout(() => {
         var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
         console.log('result:- ', result);
-        if(result.length>0){
+        if (result.length > 0) {
           this.selectedPlaceDate = result[0];
           this.selectedDate = '';
           this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
           this.changeDeleveryTime();
         }
-      },1000)
+      }, 1000)
     }
     this.events.subscribe('delivery:created', (time) => {
-      this.selectedDate ='';
+      this.selectedDate = '';
       this.selectedPlace = '';
       this.comments = '';
-      this.intervalDate =[];
+      this.intervalDate = [];
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getDeliveryPlaces();
     this.loadMap();
   }
-  ionViewDidEnter(){
-      if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
-        this.selectedPlace =  JSON.parse(localStorage.getItem('deliveryData')).place;
-        // this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
-        this.getDeliveryPlaces1();
-        setTimeout(()=>{
-          var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
-          console.log('result:- ', result);
-          if(result.length>0){
-            this.selectedPlaceDate = result[0];
-            this.selectedDate = '';
-            this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
-            this.changeDeleveryTime();
-          }
-        },1000)
-      }
-      if(JSON.parse(localStorage.getItem('comment')) && JSON.parse(localStorage.getItem('comment'))!=undefined){
-        this.comments = JSON.parse(localStorage.getItem('comment')); 
-      }
+  ionViewDidEnter() {
+    if (JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData')) != undefined) {
+      this.selectedPlace = JSON.parse(localStorage.getItem('deliveryData')).place;
+      // this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+      this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+      // this.getDeliveryPlaces1();
+      // setTimeout(()=>{
+      //   var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
+      //   console.log('result:- ', result);
+      //   if(result.length>0){
+      //     this.selectedPlaceDate = result[0];
+      //     this.selectedDate = '';
+      //     this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
+      //     this.changeDeleveryTime();
+      //   }
+      // },1000)
     }
+    if (JSON.parse(localStorage.getItem('comment')) && JSON.parse(localStorage.getItem('comment')) != undefined) {
+      this.comments = JSON.parse(localStorage.getItem('comment'));
+    }
+  }
   loadMap(lat?: any, lng?: any) {
-    if(lat && lng) {
+    if (lat && lng) {
       this.initMap(lat, lng);
     } else {
       this.geolocation.getCurrentPosition().then((resp) => {
-        this.initMap(resp.coords.latitude, resp.coords.longitude);  
+        this.initMap(resp.coords.latitude, resp.coords.longitude);
       }).catch((error) => {
         console.log('Error getting location', error);
       });
@@ -104,7 +108,7 @@ export class DeliveryPage implements OnInit {
     }
     // this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);    // To get address from lat-long.
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    var goldenGatePosition = {lat: this.map.center.lat(),lng: this.map.center.lng()};
+    var goldenGatePosition = { lat: this.map.center.lat(), lng: this.map.center.lng() };
     var marker = new google.maps.Marker({
       position: goldenGatePosition,
       map: this.map,
@@ -145,29 +149,37 @@ export class DeliveryPage implements OnInit {
       });
   } */
   async presentAlertPrompt() {
-    const alert = await this.alertController.create({
-      header: 'Are you sure!',
-      message: 'Replacing the address could empty the cart.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            this.selectedPlace = JSON.parse(localStorage.getItem('deliveryData')).place;
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-            localStorage.removeItem('cart_data')
-          }
-        }
-      ]
-    });
+    this.translate.get(['cancel', 'replacing-address-could-empty-cart','okay','areyousure']).subscribe(
+      async (value) => {
+        console.log('VALUE:: ', value);
+        // value is our translated string
+        // this.cancelTranslate = value;
 
-    await alert.present();
+        const alert = await this.alertController.create({
+          header: value['areyousure'],
+          message: value['replacing-address-could-empty-cart'],
+          buttons: [
+            {
+              text: value['cancel'],
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                this.selectedPlace = JSON.parse(localStorage.getItem('deliveryData')).place;
+                console.log('Confirm Cancel: blah');
+              }
+            }, {
+              text: value['okay'], 
+              handler: () => {
+                console.log('Confirm Okay');
+                localStorage.removeItem('cart_data')
+              }
+            }
+          ]
+        });
+
+        await alert.present();
+      }
+    )
   }
   getDeliveryPlaces() {
     this.api.showLoader();
@@ -193,39 +205,39 @@ export class DeliveryPage implements OnInit {
     const url = '/locations';
     const params = {};
     this.api.get(url, params).subscribe(data => {
- 
+
       console.log('Places res:- ', data);
       if (data.locations) {
         this.places = data.locations;
       }
     }, err => {
-    
+
       console.log('Places err:- ', err);
     });
   }
-  changeDeliveryPlace(evt) {   
+  changeDeliveryPlace(evt) {
     this.selectedPlaceDate = {};
-    console.log('selected delivery:- ', this.selectedPlace,JSON.parse(localStorage.getItem('deliveryData')));
-    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
-      if(this.selectedPlace != JSON.parse(localStorage.getItem('deliveryData')).place){
+    console.log('selected delivery:- ', this.selectedPlace, JSON.parse(localStorage.getItem('deliveryData')));
+    if (JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData')) != undefined) {
+      if (this.selectedPlace != JSON.parse(localStorage.getItem('deliveryData')).place) {
         console.log("ifffffffffffffffffff")
         var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
         console.log('result:- ', result);
-        if(result.length>0){
+        if (result.length > 0) {
           this.selectedPlaceDate = result[0];
           this.selectedDate = '';
           this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
           // this.getAddressFromCoords(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
           this.changeDeleveryTime();
         }
-        if(localStorage.getItem('cart_data') && JSON.parse(localStorage.getItem('cart_data')).length>0){
+        if (localStorage.getItem('cart_data') && JSON.parse(localStorage.getItem('cart_data')).length > 0) {
           this.presentAlertPrompt();
-        }       
-      }else{
+        }
+      } else {
         console.log("elsssssssssssss")
         var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
         console.log('result:- ', result);
-        if(result.length>0){
+        if (result.length > 0) {
           this.selectedPlaceDate = result[0];
           this.selectedDate = '';
           this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
@@ -234,10 +246,10 @@ export class DeliveryPage implements OnInit {
         }
       }
 
-    }else{
+    } else {
       var result = this.places.filter(x => x.id === this.selectedPlace).map(x => x);
       console.log('result:- ', result);
-      if(result.length>0){
+      if (result.length > 0) {
         this.selectedPlaceDate = result[0];
         this.selectedDate = '';
         this.loadMap(parseFloat(this.selectedPlaceDate.latitude), parseFloat(this.selectedPlaceDate.longitude));
@@ -246,7 +258,7 @@ export class DeliveryPage implements OnInit {
       }
     }
 
-  
+
   }
 
   changeDeleveryTime() {
@@ -265,9 +277,9 @@ export class DeliveryPage implements OnInit {
     this.hours.forEach(element => {
       that.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0' + month) + '-' + year + ' ' + element);
     });
-    console.log(this.intervalDate,"hours");
-    if(JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData'))!=undefined){
-    this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
+    console.log(this.intervalDate, "hours");
+    if (JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData')) != undefined) {
+      this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;
     }
     // this.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0'+month) + '-' + year);
     this.api.hideLoader();
@@ -279,11 +291,15 @@ export class DeliveryPage implements OnInit {
   confirm() {
     setTimeout(() => {
       if (!this.selectedPlace.length) {
-        this.api.presentToast('Please select delivery place.');
+        // this.api.presentToast('Please select delivery place.');
+        var message = this.translate.defaultLang == 'es' ? 'Por favor seleccione el lugar de entrega.' : 'Please select delivery place.';
+        this.api.presentToast(message);
         return;
       }
       if (!this.selectedDate.length) {
-        this.api.presentToast('Please select delivery hour.');
+        // this.api.presentToast('Please select delivery hour.');
+        var message = this.translate.defaultLang == 'es' ? 'Por favor seleccione hora de entrega.' : 'Please select delivery hour.';
+        this.api.presentToast(message);
         return;
       }
       let params: any = {

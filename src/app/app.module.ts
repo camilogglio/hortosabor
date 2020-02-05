@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpBackend, HttpXhrBackend } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { NavController, NavParams } from '@ionic/angular';
@@ -20,6 +18,13 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { ProductdetailsPageModule } from '../app/productdetails/productdetails.module';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpModule, Http } from '@angular/http';
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,13 +32,21 @@ import { File } from '@ionic-native/file/ngx';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpModule,
     FormsModule,
-    HttpClientModule,
     ReactiveFormsModule,
     ProductdetailsPageModule,
     IonicStorageModule.forRoot(),
+    HttpModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
   ],
+  exports: [TranslateModule],
   providers: [
     StatusBar,
     SplashScreen, Geolocation, NativeGeocoder,

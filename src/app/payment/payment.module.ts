@@ -7,14 +7,23 @@ import { IonicModule } from '@ionic/angular';
 import { PaymentPageRoutingModule } from './payment-routing.module';
 
 import { PaymentPage } from './payment.page';
-
+import { HttpClient } from "@angular/common/http";
+import { createTranslateLoader } from "../../app/app.module";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    PaymentPageRoutingModule
+    PaymentPageRoutingModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [PaymentPage]
 })

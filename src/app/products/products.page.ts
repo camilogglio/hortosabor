@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { CartService } from '../cart.service';
 import { Router, RouterEvent, NavigationEnd, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ProductdetailsPage } from '../productdetails/productdetails.page';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
@@ -33,7 +34,8 @@ export class ProductsPage implements OnInit {
     private route: ActivatedRoute,
     public api: ApiService,
     public cart: CartService,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public translate: TranslateService,
   ) {
     this.total = this.cart.calculateTotal();
     console.log(this.cart.calculateTotal());
@@ -54,13 +56,17 @@ export class ProductsPage implements OnInit {
   addQuantity() {
     this.quantity = this.quantity + 1;
      this.selectedProduct.quantity = this.quantity;
-     this.api.presentToast('Click on cart button to add product.');
+     var message = this.translate.defaultLang == 'es' ? 'Haga clic en el botón del carrito para agregar producto.' : 'Click on cart button to add product.' ;
+console.log(this.translate);
+     this.api.presentToast(message);
   }
   removeQuantity() {
     if (this.quantity > 1) {
       this.quantity = this.quantity - 1;
       this.selectedProduct.quantity = this.quantity;
-      this.api.presentToast('Click on cart button to add product.');
+      var message = this.translate.defaultLang == 'es' ? 'Haga clic en el botón del carrito para agregar producto.' : 'Click on cart button to add product.' ;
+
+     this.api.presentToast(message);
     }
   }
   async presentModal(data) {
@@ -204,7 +210,8 @@ export class ProductsPage implements OnInit {
       this.cartData.push(this.selectedProduct);
     }
     localStorage.setItem("cart_data",JSON.stringify(this.cartData));
-    this.total = this.cart.calculateTotal()
-    this.api.presentToast('Product added to cart successfully.');
+    this.total = this.cart.calculateTotal();
+    var message = this.translate.defaultLang == 'es' ? 'Producto agregado al carrito con éxito.' : 'Product added to cart successfully.' ;
+    this.api.presentToast(message);
   }
 }

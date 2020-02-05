@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController,MenuController } from '@ionic/angular';
 import { ApiService } from '../api.service';
 import { Storage } from '@ionic/storage';
-
+import { TranslateService } from '@ngx-translate/core';
 declare var Mercadopago: any;
 @Component({
   selector: 'app-home',
@@ -16,8 +16,10 @@ export class HomePage {
     public navCtrl: NavController,
     public api: ApiService,
     public storage: Storage,
-    public menu:MenuController
+    public menu:MenuController,
+    public translate: TranslateService
   ) {
+    // translate.setDefaultLang('es');
     this.menu.swipeEnable(false);
     // console.log(Mercadopago);
     Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
@@ -53,7 +55,9 @@ export class HomePage {
       this.storage.set('terms', this.terms);
       this.navCtrl.navigateRoot('/delivery');
     } else {
-      this.api.presentToast('Please accept terms & conditions.');
+      var message = this.translate.defaultLang == 'es' ? 'Por favor acepte los términos y condiciones.' : 'Please accept terms & conditions.';
+        this.api.presentToast(message);
+      // this.api.presentToast('Please accept terms & conditions.');
     }
   }
 

@@ -8,21 +8,25 @@ ion-title{
 }
 input#mobileno {
     border: 1px solid #ddd;
-    height: 48px;
+    height: 40px;
     outline: none;
+    width: 100%;
+    font-size: 14px;
 }
 .receipt-btn{
     color: #fff;
     border-color: #f16000;
     font-weight: bold;
-    font-size: 18px;
-    border-radius: 8px;
-    height: 48px;
+    font-size: 13px;
+    border-radius: 0px;
+    width:100%;
+    height: 40px;
     letter-spacing: 1px;
     background-color: #f16000;
     --background: #f16000;
     background: #f16000;
     margin: 0;
+    --box-shadow: none;
 }
 .receipt-history-btn{
     --border-color: #f16000;
@@ -147,12 +151,28 @@ p.count{
 .active{
     border: 2px solid #ff2400;
 }
+
+
 @media (max-width:411px){
     .cart-list h5{
         font-size: 13px;
     }
+    .input-reciept{
+        padding-right: 6px;
+        padding-left: 52px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin-left: 0;
+    }
 }
 @media (max-width:320px){
+    .input-reciept{
+        padding-right: 6px;
+        padding-left: 52px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin-left: 0;
+    }
     .product-img img{
         width:100%;
     }
@@ -163,3 +183,13 @@ p.count{
         font-size: 12px;
     }
 }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation : portrait) {
+    .input-reciept{
+        padding-right: 6px;
+        padding-left: 52px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        width: 100% !important;
+        margin-left: 10px;
+    }
+  }

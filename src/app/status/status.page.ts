@@ -4,6 +4,7 @@ import { AlertController,Events} from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-status',
   templateUrl: './status.page.html',
@@ -13,8 +14,12 @@ export class StatusPage implements OnInit {
   ordersData:any=[];
   status:any='';
   timestamp:any='';
+  enterTranslate:any='';
+  verificationTranslate:any='';
+  cancelTranslate:any='';
+  okTranslate:any='';
   statusArray=['Order received','Preparing','On the way','Delivered'];
-  constructor(public route:ActivatedRoute,public api:ApiService, public alertController:AlertController, public events:Events,private transfer: FileTransfer, private file: File) { 
+  constructor(public translate: TranslateService,public route:ActivatedRoute,public api:ApiService, public alertController:AlertController, public events:Events,private transfer: FileTransfer, private file: File) { 
     // this.events.subscribe('status:created', (time) => {
     //   this.presentAlertPrompt();
     // });
@@ -47,7 +52,7 @@ export class StatusPage implements OnInit {
       console.log('res:- ', data.orders);   
       if(data.orders_final.orders.length == 0){
         this.ordersData = [];
-        this.status = "No Order Found";
+        this.status = this.translate.defaultLang == 'es' ? 'No se encontró orden' : 'No Order Found' ;
         console.log(this.ordersData, this.status)
       }else{
         this.ordersData = data.orders_final;
@@ -71,13 +76,16 @@ export class StatusPage implements OnInit {
       console.log("iff")
         fileTransfer.download(finalurl, this.file.externalDataDirectory + 'downloads/status_'+ this.ordersData.order_number+'_'+this.timestamp+'.pdf').then((entry) => {
           // this.api.presentToast('File saved in :  ' + entry.nativeURL);
-          this.api.presentToast('File saved in :  ' + entry.nativeURL);
-        
+          // this.api.presentToast('File saved in :  ' + entry.nativeURL);
+          var message = this.translate.defaultLang == 'es' ? 'Archivo guardado en: ' : 'File saved in : ' ;
+          this.api.presentToast(message + entry.nativeURL);
           let url = entry.toURL();
          
         })
         .catch((err) =>{
-          alert('Error saving file: ' + err.message);
+          // alert('Error saving file: ' + err.message);
+          var message = this.translate.defaultLang == 'es' ? 'Error al guardar el archivo: ' : 'Error saving file : ' ;
+          this.api.presentToast(message + err.message);
         })
       }
 		)
@@ -89,27 +97,59 @@ export class StatusPage implements OnInit {
         },500)
          this.file.createDir(this.file.externalDataDirectory , 'downloads', false)
         .then(response => {
-          this.api.presentToast('New folder created:  ' + response.fullPath);
+          var message = this.translate.defaultLang == 'es' ? 'Nueva carpeta creada:' : 'New folder created: ';
+               this.api.presentToast(message + response.fullPath);
           fileTransfer.download(finalurl, this.file.externalDataDirectory  + 'downloads/status_'+this.timestamp+'.pdf').then((entry) => {
-              alert('File saved in : ' + entry.nativeURL);
+              // alert('File saved in : ' + entry.nativeURL);
+              var message = this.translate.defaultLang == 'es' ? 'Archivo guardado en: ' : 'File saved in : ' ;
+              this.api.presentToast(message + entry.nativeURL);
             })
             .catch((err) =>{
-              alert('Error saving file:  ' + err.message);
+              // alert('Error saving file:  ' + err.message);
+              var message = this.translate.defaultLang == 'es' ? 'Error al guardar el archivo: ' : 'Error saving file : ' ;
+              this.api.presentToast(message + err.message);
             });		
         }).catch(err => {
-          alert('It was not possible to create the dir "downloads". Err: ' + err.message);
+          // alert('It was not possible to create the dir "downloads". Err: ' + err.message);
+          var message = this.translate.defaultLang == 'es' ? 'No fue posible crear el directorio "descargas". Errar: ' : 'It was not possible to create the dir "downloads". Err : ' ;
+          this.api.presentToast(message + err.nativeURL);
         })		
       }    	
 		);  
   }
   async presentAlertPrompt() {
+    this.translate.get('enter').subscribe(
+      value => {
+        // value is our translated string
+        this.enterTranslate = value;
+      }
+    )
+    this.translate.get('verification_number').subscribe(
+      value => {
+        // value is our translated string
+        this.verificationTranslate = value;
+      }
+    )
+    this.translate.get('cancel').subscribe(
+      value => {
+        // value is our translated string
+        this.cancelTranslate = value;
+      }
+    )
+    this.translate.get('ok').subscribe(
+      value => {
+        // value is our translated string
+        this.okTranslate = value;
+      }
+    )
+    
     const alert = await this.alertController.create({
-      header: 'Enter',
+      header:  this.enterTranslate,
       inputs: [
         {
           name: 'verify_no',
           type: 'text',
-          placeholder: 'Verification Number'
+          placeholder: this.verificationTranslate
         }        
       ],
       buttons: [
@@ -125,7 +165,9 @@ export class StatusPage implements OnInit {
           handler: (data) => {
             console.log('Confirm Ok', data);
             if(data.verify_no == ''){
-              this.api.presentToast('Enter verification number.')
+              // this.api.presentToast('Enter verification number.')
+              var message = this.translate.defaultLang == 'es' ? 'Ingrese el número de verificación.' : 'Enter verification number.' ;
+      this.api.presentToast(message);
               return false
             }else{
               var newData = {

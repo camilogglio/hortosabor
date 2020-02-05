@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title text-left>History</ion-title>
+    <ion-title text-left>{{'receipts'| translate}}</ion-title>
     <ion-buttons slot="end">
       <!-- <ion-icon name="search"></ion-icon>
       <ion-icon name="md-more"></ion-icon> -->
@@ -15,10 +15,10 @@
   <div class="receipt-page">
    <ion-row>
      <ion-col size="8">
-      <input id="phone-no" type="hidden" placeholder="Mobile"  class="signupdailcode" [(ngModel)]="dial_code">
-      <input type="tel" id="mobileno" (keyup)="updatephone($event)"  placeholder="9874512630" maxlength="10" [(ngModel)]="phone_number">
+      <input id="historyphone-no" type="hidden" placeholder="Mobile"  class="signupdailcode" [(ngModel)]="dial_code">
+      <input type="tel" id="historymobileno" class="input-reciept" (keyup)="updatephone($event)"  placeholder="9874512630" maxlength="10" [(ngModel)]="phone_number">
      </ion-col >
-     <ion-col size="4"><ion-button (click)="CheckPhoneNumber()" class="receipt-btn">Search</ion-button></ion-col>
+     <ion-col size="4"><ion-button (click)="CheckPhoneNumber()" class="receipt-btn">{{'search' | translate}}</ion-button></ion-col>
    </ion-row> 
   </div>
 
@@ -30,10 +30,10 @@
         </ion-text>
         <p>{{data.delivery_date}}</p>
           <ion-text >
-        <h5>{{data.status}}</h5>
+        <h5>{{data.status |translate}}</h5>
       </ion-text>
        </ion-label>
-       <ion-button fill="outline" slot="end" class="receipt-history-btn"  (click)="download(data)">Reciept</ion-button>
+       <ion-button fill="outline" slot="end" class="receipt-history-btn"  (click)="download(data)">{{'receipt' |translate}}</ion-button>
     </ion-item>
      <!-- <ion-row class="cart-list">
     <ion-col size="1">
@@ -74,6 +74,6 @@
 </div> 
   
 <div>
-<p text-center *ngIf="historyData.length==0 && noData"> No History Found.</p>
+<p text-center *ngIf="historyData.length==0 && noData"> {{'no-data-found' | translate}}.</p>
 </div>
 </ion-content>

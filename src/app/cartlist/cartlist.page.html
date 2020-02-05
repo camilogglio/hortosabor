@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title text-left>Cart List</ion-title>
+    <ion-title text-left>{{'cart_list' |translate}}</ion-title>
     <ion-buttons slot="end">
       <!-- <ion-icon name="search"></ion-icon>
       <ion-icon name="md-more"></ion-icon> -->
@@ -14,13 +14,13 @@
 <ion-content >
   <ion-row class="cart-labels" text-center>
     <ion-col size="2" >
-      <label>Qty</label>
+      <label>{{'qty' | translate}}</label>
      </ion-col>
      <ion-col size="4">
-       <label>Product</label>
+       <label>{{'products' | translate}}</label>
      </ion-col>
      <ion-col size="3">
-      <label>Price</label>
+      <label>{{'price' | translate}}</label>
     </ion-col>
     <ion-col size="3">
       <label>Total</label>
@@ -88,19 +88,19 @@
     <ion-col size="4">
       <div class="cart-icons" (click)="add_quantity()">
         <img src="../../assets/images/plus.png"/>
-        <p>Add</p>
+        <p>{{'add'|translate}}</p>
       </div>
     </ion-col>
     <ion-col size="4">
       <div class="cart-icons" (click)="remove_quantity()">
        <img src="../../assets/images/minus.png"/>
-       <p>Reduce</p>
+       <p>{{'reduce'|translate}}</p>
       </div>
     </ion-col>
     <ion-col size="4">
       <div class="cart-icons" (click)="remove()">
          <img src="../../assets/images/delete.png"/>
-         <p>Eliminate</p>
+         <p>{{'eliminate'|translate}}</p>
       </div>
     </ion-col>
   </ion-row>
@@ -117,11 +117,11 @@
   
   </div>
 
-  <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo()">BUY</ion-button>
+  <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo()">{{'buy'|translate}}</ion-button>
 </div> 
   </div>
 <div *ngIf="cartList.length==0">
-<p text-center> No Product Found.</p>
+<p text-center>{{'no-product-found' | translate}}</p>
 </div>
  
 </ion-content>

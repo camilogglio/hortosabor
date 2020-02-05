@@ -7,13 +7,22 @@ import { IonicModule } from '@ionic/angular';
 import { HistoryPageRoutingModule } from './history-routing.module';
 
 import { HistoryPage } from './history.page';
-
+import { HttpClient } from "@angular/common/http";
+import { createTranslateLoader } from "../../app/app.module";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HistoryPageRoutingModule
+    HistoryPageRoutingModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [HistoryPage]
 })

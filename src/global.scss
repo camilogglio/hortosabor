@@ -130,7 +130,9 @@ ion-menu-button {
   #cardNumber.valid.discover {
     background-position: 2px -328px, 245px -84px;
   }
-  
+  span.alert-button-inner {
+    font-weight: 100;
+  }
   @media (min-width: 375px) {
     #cardNumber {
       background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);

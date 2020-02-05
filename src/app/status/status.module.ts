@@ -7,13 +7,23 @@ import { IonicModule } from '@ionic/angular';
 import { StatusPageRoutingModule } from './status-routing.module';
 
 import { StatusPage } from './status.page';
+import { HttpClient } from "@angular/common/http";
+import { createTranslateLoader } from "../../app/app.module";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StatusPageRoutingModule
+    StatusPageRoutingModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [StatusPage]
 })

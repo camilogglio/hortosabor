@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { Http, HttpModule, RequestOptions, Headers } from '@angular/http';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import 'rxjs/add/operator/map';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,22 @@ export class ApiService {
     public HttpC: HttpClient,
     public loadingController: LoadingController,
     public alertController: AlertController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public translate: TranslateService
   ) { }
 
   async showLoader() {
-    this.loading = await this.loadingController.create({
-      spinner: 'crescent',
-      message: 'Please wait...',
-      translucent: true,
-      cssClass: 'api-loader'
-    });
-    return await this.loading.present();
+    this.translate.get(['pleasewait']).subscribe(
+      async (value) => {
+        console.log('VALUE:: ', value);
+        this.loading = await this.loadingController.create({
+          spinner: 'crescent',
+          message: value['pleasewait'],
+          translucent: true,
+          cssClass: 'api-loader'
+        });
+        return await this.loading.present();
+      });
   }
 
   async hideLoader() {
@@ -45,8 +51,6 @@ export class ApiService {
 
   public post(url, params) {
     const headers = new Headers();
-    // headers.append('Accept', 'application/json');
-    // headers.append('Content-Type', 'application/json');
     const options = new RequestOptions({ headers: headers });
     return this.http
       .post(this.url + url, JSON.stringify(params), options)
@@ -55,8 +59,6 @@ export class ApiService {
 
   public get(url, params) {
     const headers = new Headers();
-    // headers.append('Accept', 'application/json');
-    // headers.append('Content-Type', 'application/json');
     const options = new RequestOptions({
       headers: headers,
       params: params

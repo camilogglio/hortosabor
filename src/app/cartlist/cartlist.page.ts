@@ -3,6 +3,7 @@ import { CartService } from '../cart.service';
 import { ApiService } from '../api.service';
 import { IonSlides, NavController, NavParams } from '@ionic/angular';
 import { Router,ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cartlist',
@@ -15,7 +16,7 @@ export class CartlistPage implements OnInit {
   index:any='';
   selectedData: any = {};
   navData:any='';
-  constructor(public cart: CartService, public api: ApiService, public navCtrl:NavController, public route:ActivatedRoute, public router:Router) {
+  constructor(public translate: TranslateService,public cart: CartService, public api: ApiService, public navCtrl:NavController, public route:ActivatedRoute, public router:Router) {
     this.route.queryParams.subscribe(params => {
       if (params && params.value) {
         this.navData = JSON.parse(params.value);
@@ -62,7 +63,9 @@ export class CartlistPage implements OnInit {
       localStorage.setItem("cart_data", JSON.stringify(this.cartList));
       this.total = this.cart.calculateTotal();
     } else {
-      this.api.presentToast('Please first select a product to increase the quantity');
+      // this.api.presentToast('Please first select a product to increase the quantity');
+      var message = this.translate.defaultLang == 'es' ? 'Primero seleccione un producto para aumentar la cantidad' : 'Please first select a product to increase the quantity' ;
+      this.api.presentToast(message);
     }
   }
   remove_quantity() {
@@ -77,7 +80,10 @@ export class CartlistPage implements OnInit {
       }
      
     } else {
-      this.api.presentToast('Please first select a product to decrease the quantity');
+      // this.api.presentToast('Please first select a product to decrease the quantity');
+      var message = this.translate.defaultLang == 'es' ? 'Primero seleccione un producto para disminuir la cantidad' : 'Please first select a product to decrease the quantity' ;
+      this.api.presentToast(message);
+
     }
   }
   remove() {
@@ -99,7 +105,9 @@ export class CartlistPage implements OnInit {
       this.selectedData ={};
       // this.cartList = JSON.parse(localStorage.getItem('cart_data'));
     } else {
-      this.api.presentToast('Please first select a product to remove from cart');
+      // this.api.presentToast('Please first select a product to remove from cart');
+      var message = this.translate.defaultLang == 'es' ? 'Primero seleccione un producto para disminuir la cantidad' : 'Please first select a product to remove from cart' ;
+      this.api.presentToast(message);
     }
   }
 }
