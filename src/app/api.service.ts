@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class ApiService {
-  url = 'http://35.182.9.201/hortosabor/index.php/Api';
+  url = 'http://www.magnifresh.com/hortosabor/index.php/Api';
   loading: any;
   constructor(
     public http: Http,

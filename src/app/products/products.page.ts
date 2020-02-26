@@ -98,10 +98,10 @@ console.log(this.translate);
       this.selectedProduct = this.products[index];
      });
   }
-  onCancel(){
+  onCancel(evt){
     this.searchResult = [];
   }
-  getIndex(testSlider) {
+  getIndex() {
     this.quantity = 1;
     this.productSlide.getActiveIndex().then((index) => {
       console.log(index, "index")
