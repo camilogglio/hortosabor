@@ -36,7 +36,8 @@ export class PaymentPage implements OnInit {
   constructor(public translate: TranslateService, public events: Events, public cart: CartService, public api: ApiService, public navCtrl: NavController, public formBuilder: FormBuilder, public route: ActivatedRoute, public router: Router) {
     this.activeImage = true;
     console.log(this.date);
-    Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
+    //Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
+    Mercadopago.setPublishableKey("APP_USR-6f9e609a-d6be-4d61-b84f-cacd8bd99a19");
     this.maxDate = moment(moment(this.date, 'YYYY-MM-DD')).format('YYYY-MM-DD');
     this.total = this.cart.calculateTotal();
     this.cardForm = this.formBuilder.group({

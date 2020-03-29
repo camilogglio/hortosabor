@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.hortosabor" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.ionic.hortosabor" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Hortosabor</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -12,42 +12,31 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <access origin="http://35.182.9.201/" />
-    <access origin="http://35.182.9.201/hortosabor/" />
-    <access origin="http://35.182.9.201/hortosabor/index.php" />
-    <access origin="http://35.182.9.201/*" />
-    <access origin="http://35.182.9.201/hortosabor/*" />
-    <access origin="http://35.182.9.201/hortosabor/index.php/*" />
-    <access origin="https://35.182.9.201/" />
-    <access origin="https://35.182.9.201/hortosabor/" />
-    <access origin="https://35.182.9.201/hortosabor/index.php" />
-    <access origin="https://35.182.9.201/*" />
-    <access origin="https://35.182.9.201/hortosabor/*" />
-    <access origin="https://35.182.9.201/hortosabor/index.php/*" />
-    <allow-intent href="http://35.182.9.201/" />
-    <allow-intent href="http://35.182.9.201/hortosabor/" />
-    <allow-intent href="http://35.182.9.201/hortosabor/index.php" />
-    <allow-intent href="http://35.182.9.201/*" />
-    <allow-intent href="http://35.182.9.201/hortosabor/*" />
-    <allow-intent href="http://35.182.9.201/hortosabor/index.php/*" />
-    <allow-intent href="https://35.182.9.201/" />
-    <allow-intent href="https://35.182.9.201/hortosabor/" />
-    <allow-intent href="https://35.182.9.201/hortosabor/index.php" />
-    <allow-intent href="https://35.182.9.201/*" />
-    <allow-intent href="https://35.182.9.201/hortosabor/*" />
-    <allow-intent href="https://35.182.9.201/hortosabor/index.php/*" />
-    <allow-navigation href="http://35.182.9.201/" />
-    <allow-navigation href="http://35.182.9.201/hortosabor/" />
-    <allow-navigation href="http://35.182.9.201/hortosabor/index.php" />
-    <allow-navigation href="http://35.182.9.201/*" />
-    <allow-navigation href="http://35.182.9.201/hortosabor/*" />
-    <allow-navigation href="http://35.182.9.201/hortosabor/index.php/*" />
-    <allow-navigation href="https://35.182.9.201/" />
-    <allow-navigation href="https://35.182.9.201/hortosabor/" />
-    <allow-navigation href="https://35.182.9.201/hortosabor/index.php" />
-    <allow-navigation href="https://35.182.9.201/*" />
-    <allow-navigation href="https://35.182.9.201/hortosabor/*" />
-    <allow-navigation href="https://35.182.9.201/hortosabor/index.php/*" />
+    <access origin="http://www.hortosabor.com.ar/" />
+    <access origin="http://www.hortosabor.com.ar/" />
+    <access origin="http://www.hortosabor.com.ar/index.php" />
+    <access origin="http://www.hortosabor.com.ar/*" />
+    <access origin="http://www.hortosabor.com.ar/index.php/*" />
+    <access origin="https://www.hortosabor.com.ar/" />
+    <access origin="https://www.hortosabor.com.ar/index.php" />
+    <access origin="https://www.hortosabor.com.ar/*" />
+    <access origin="https://www.hortosabor.com.ar/index.php/*" />
+    <allow-intent href="http://www.hortosabor.com.ar/" />
+    <allow-intent href="http://www.hortosabor.com.ar/index.php" />
+    <allow-intent href="http://www.hortosabor.com.ar/*" />
+    <allow-intent href="http://www.hortosabor.com.ar/index.php/*" />
+    <allow-intent href="https://www.hortosabor.com.ar/" />
+    <allow-intent href="https://www.hortosabor.com.ar/index.php" />
+    <allow-intent href="https://www.hortosabor.com.ar/*" />
+    <allow-intent href="https://www.hortosabor.com.ar/index.php/*" />
+    <allow-navigation href="http://www.hortosabor.com.ar/" />
+    <allow-navigation href="http://www.hortosabor.com.ar/index.php" />
+    <allow-navigation href="http://www.hortosabor.com.ar/*" />
+    <allow-navigation href="http://www.hortosabor.com.ar/index.php/*" />
+    <allow-navigation href="https://www.hortosabor.com.ar/" />
+    <allow-navigation href="https://www.hortosabor.com.ar/index.php" />
+    <allow-navigation href="https://www.hortosabor.com.ar/*" />
+    <allow-navigation href="https://www.hortosabor.com.ar/index.php/*" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />

@@ -183,7 +183,7 @@ export class DeliveryPage implements OnInit {
   }
   getDeliveryPlaces() {
     this.api.showLoader();
-    const url = '/locations';
+    const url = '/locations2';
     const params = {};
     this.api.get(url, params).subscribe(data => {
       setTimeout(() => {
@@ -202,7 +202,7 @@ export class DeliveryPage implements OnInit {
   }
   getDeliveryPlaces1() {
     // this.api.showLoader();
-    const url = '/locations';
+    const url = '/locations2';
     const params = {};
     this.api.get(url, params).subscribe(data => {
 
@@ -263,20 +263,36 @@ export class DeliveryPage implements OnInit {
 
   changeDeleveryTime() {
     this.selectedPlaceDate;
-    var hours = parseInt(this.selectedPlaceDate.hours);
-    var days = hours / 24;
     var currentDate = new Date();
-    this.timeInterval = currentDate.getDate() + days;
+    // INI 3DDOS
+    //var hours = parseInt(this.selectedPlaceDate.hours);
+    //var days = hours / 24;
+    //this.timeInterval = currentDate.getDate() + days;
+    // FIN 3DDOS
     this.intervalDate = [];
 
-    var month = currentDate.getMonth() + 1;
-    var year = currentDate.getFullYear();
-
-    console.log('timeInt', this.timeInterval, this.timeInterval + '-' + month + '-' + year, new Date(this.timeInterval + '-' + month + '-' + year));
+    //console.log('timeInt', this.timeInterval, this.timeInterval + '-' + month + '-' + year, new Date(this.timeInterval + '-' + month + '-' + year));
     var that = this;
-    this.hours.forEach(element => {
-      that.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0' + month) + '-' + year + ' ' + element);
-    });
+    // INI 3DDOS
+    for(var i=0; i<7; i++)
+    {
+      currentDate.setDate(currentDate.getDate() + 1);
+      var dia = currentDate.getDate();
+      var month = currentDate.getMonth() + 1;
+      var year = currentDate.getFullYear();
+
+      this.selectedPlaceDate.horarios.forEach(dias => {
+        //alert(i+' - '+currentDate.getDay());
+        if(dias.dia == currentDate.getDay())
+        {
+          that.intervalDate.push(dia + '-' + ((month).toString().length > 1 ? month : '0' + month) + '-' + year + ' de ' + dias.inicio.substring(0, 5) + ' a '+ dias.fin.substring(0, 5));
+        }
+      });
+    }
+    //this.hours.forEach(element => {
+      //that.intervalDate.push(this.timeInterval + '-' + ((month).toString().length > 1 ? month : '0' + month) + '-' + year + ' ' + element);
+    //});
+    // FIN 3DDOS
     console.log(this.intervalDate, "hours");
     if (JSON.parse(localStorage.getItem('deliveryData')) && JSON.parse(localStorage.getItem('deliveryData')) != undefined) {
       this.selectedDate = JSON.parse(localStorage.getItem('deliveryData')).deliveryDate;

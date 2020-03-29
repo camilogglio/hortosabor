@@ -37,7 +37,7 @@
      "language":"Idioma",
      "delivery-place":"Lugar de entrega",
      "delivery-hour":"Hora de entrega",
-     "comments":"Comentarios",
+     "comments":"Introduzca número de lote y/o comentarios",
      "confirm":"Confirmar",
      "okay":"Ok", 
      "dismiss":"Cancelar",
