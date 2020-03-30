@@ -47,6 +47,7 @@ export class StatusPage implements OnInit {
     // this.presentAlertPrompt();
   }
   order(data){
+    this.api.showLoader();
       const url = '/order_info';
     this.api.post(url, data).subscribe(data => {
       console.log('res:- ', data.orders);   
@@ -56,9 +57,30 @@ export class StatusPage implements OnInit {
         console.log(this.ordersData, this.status)
       }else{
         this.ordersData = data.orders_final;
-      }     
+        //Sin este alert no se ve el resultado
+        const alert = this.alertController.create({
+          header:  this.enterTranslate,
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {
+                console.log('Confirm Cancel');
+              }
+            }
+          ]
+        });
+        //////////////////////////////////////
+      }
+      setTimeout(() => {
+        this.api.hideLoader();
+      }, 1000);    
     }, err => {
       console.log('err:- ', err);
+      setTimeout(() => {
+        this.api.hideLoader();
+      }, 1000);
     });
   }
   download() {

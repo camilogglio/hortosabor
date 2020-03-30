@@ -27,17 +27,19 @@ export class PaymentPage implements OnInit {
   comments: any = '';
   submitAttempt: boolean = false;
   minDate = new Date().getFullYear();
-  date = (new Date().getFullYear() + 5) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+  date = (new Date().getFullYear() + 6) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
   maxDate: any = '';
   terms: any = false;
   doSubmit = false;
   token: any = '';
   products: any = [];
+  doctypes: any = [];
   constructor(public translate: TranslateService, public events: Events, public cart: CartService, public api: ApiService, public navCtrl: NavController, public formBuilder: FormBuilder, public route: ActivatedRoute, public router: Router) {
     this.activeImage = true;
     console.log(this.date);
-    //Mercadopago.setPublishableKey("TEST-aece564d-442e-4a41-80b9-a07f31624d11");
+    //Mercadopago.setPublishableKey("TEST-e8c047d4-726a-4e98-b9bb-218484a3baf5");
     Mercadopago.setPublishableKey("APP_USR-6f9e609a-d6be-4d61-b84f-cacd8bd99a19");
+    Mercadopago.getIdentificationTypes((res, data) => {this.doctypes=data});
     this.maxDate = moment(moment(this.date, 'YYYY-MM-DD')).format('YYYY-MM-DD');
     this.total = this.cart.calculateTotal();
     this.cardForm = this.formBuilder.group({
@@ -47,7 +49,7 @@ export class PaymentPage implements OnInit {
       delivery_address: [''],
       delivery_date: [''],
       dailcode: [''],
-      local_id: ["", Validators.compose([Validators.required])]
+      local_id: ['']
     });
 
     this.paymentForm = this.formBuilder.group({
@@ -57,6 +59,8 @@ export class PaymentPage implements OnInit {
       cvv: ["", Validators.compose([Validators.required])],
       cardname: ["", Validators.compose([Validators.required])],
       expDate: ["", Validators.compose([Validators.required])],
+      docType: ["", Validators.compose([Validators.required])],
+      docNumber: ["", Validators.compose([Validators.required])]
       // email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
     });
     this.total = this.cart.calculateTotal();
@@ -198,7 +202,7 @@ export class PaymentPage implements OnInit {
         delivery_date: that.cardForm.value.delivery_date,
         phone_number: full_number,
         email: that.cardForm.value.email,
-        local_id: that.cardForm.value.local_id,
+        local_id: this.paymentForm.value.docNumber,
         total_price: that.total,
         payment_type: 'card',
         name: this.cardForm.value.name,
@@ -209,29 +213,33 @@ export class PaymentPage implements OnInit {
       console.log($form, params)
       // Mercadopago.createToken($form, this.sdkResponseHandler); // The function "sdkResponseHandler" is defined below
       Mercadopago.createToken($form, (res, data) => {
-        setTimeout(() => {
-          this.api.hideLoader();
-        }, 1000)
         that.token = data.id;
         console.log('token', that.navData, data);
         if (data.cause) {
+          setTimeout(() => {
+            this.api.hideLoader();
+          }, 1000);
           if (data.cause[0].code == "E301") {
-
             // this.api.presentToast('Invalid Card Number')
             var message = this.translate.defaultLang == 'es' ? 'Numero de tarjeta invalido' : 'Invalid Card Number';
             this.api.presentToast(message);
           }
-          if (data.cause[0].code == "E302") {
+          else if (data.cause[0].code == "E302") {
             // this.api.presentToast('Invalid CVV Number')
             var message = this.translate.defaultLang == 'es' ? 'Número de CVV no válido.' : 'Invalid CVV Number.';
             this.api.presentToast(message);
+          }
+          else{
+            this.api.presentToast(data.cause[0].description);
           }
         } else {
           params.token = that.token;
           console.log(params, "parmas");
           this.api.post(url, params).subscribe(data => {
-
             console.log('res:- ', data);
+            setTimeout(() => {
+              this.api.hideLoader();
+            }, 1000);
             if (data.error) {
               this.api.presentToast(data.error.message);
             } else {
@@ -243,13 +251,14 @@ export class PaymentPage implements OnInit {
               localStorage.removeItem('cart_data');
 
               // this.events.publish('delivery:created', Date.now());
-              this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.verify_number) } });
+              this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
             }
-
-
 
           }, err => {
             console.log('err:- ', err);
+            setTimeout(() => {
+              this.api.hideLoader();
+            }, 1000);
           });
         }
 
@@ -364,7 +373,7 @@ export class PaymentPage implements OnInit {
       // localStorage.removeItem('deliveryData');
       // localStorage.removeItem('comment');
       // this.events.publish('delivery:created', Date.now());
-      this.navCtrl.navigateRoot(['/status'], { queryParams: { value: JSON.stringify(data.verify_number) } });
+      this.navCtrl.navigateRoot(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
       // if (data.search.length > 0) {
       //   this.searchResult = data.search;
       // } else {

@@ -83,7 +83,7 @@
             <!-- <p class="payment-error"  *ngIf="cardForm.controls.phone.hasError('pattern')">Invalid phone number.</p> -->
           </ion-col>
 
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="card_Image">
             <ion-input type="tel" placeholder="{{'local_id' |translate}}" formControlName="local_id"></ion-input>
             <ion-input type="text" placeholder="Delivery Address" disabled formControlName="delivery_address"
               style="display: none;"></ion-input>
@@ -108,9 +108,19 @@
         
         </li> -->
           <li>
+            <label for="docType">Tipo de documento:</label>
+            <ion-select placeholder="Seleccione el tipo de documento" id="docType" formControlName="docType" data-checkout="docType" okText="{{'okay' | translate}}" cancelText="{{'dismiss' | translate}}">
+              <ion-select-option *ngFor="let type of doctypes" value="{{type.id}}">{{type.name}}</ion-select-option>
+            </ion-select>
+          </li>
+          <li>
+            <label for="docNumber">Número de documento:</label>
+            <input type="text" id="docNumber" formControlName="docNumber" data-checkout="docNumber" placeholder="12345678" value="" />
+          </li>
+          <li>
             <label for="cardNumber">{{'card_number' | translate}}:</label>
-            <input type="tel" id="cardNumber" data-checkout="cardNumber" placeholder="4509 9535 6623 3704"
-              value="4509 9535 6623 3704" formControlName="cardnumber" (keyup)="validateCard($event.target)" />
+            <input type="tel" id="cardNumber" data-checkout="cardNumber" placeholder="0000000000000000"
+              value="" formControlName="cardnumber" (keyup)="validateCard($event.target)" />
             <p class="payment-error"
               *ngIf="paymentForm.get('cardnumber').hasError('required') && paymentForm.get('cardnumber').touched">
               {{'card_number' |translate}} {{'is-required' | translate}}</p>
@@ -138,7 +148,7 @@
           <li style="display: none;">
             <label for="cardExpirationMonth">{{'expiration-month' | translate}}:</label>
             <input type="tel" maxlength="2" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
-              placeholder="12" value="12" formControlName="expMonth" />
+              placeholder="12" value="" formControlName="expMonth" />
             <p class="payment-error"
               *ngIf="!paymentForm.controls.expMonth.valid  && (paymentForm.controls.expMonth.touched)">
               {{'expiration-month-required' | translate}}</p>
@@ -146,7 +156,7 @@
           <li style="display: none;">
             <label for="cardExpirationYear">{{'expiration-year' | translate}}:</label>
             <input type="tel" maxlength="4" id="cardExpirationYear" data-checkout="cardExpirationYear"
-              placeholder="2015" value="2024" formControlName="expYear" />
+              placeholder="2015" value="" formControlName="expYear" />
             <p class="payment-error"
               *ngIf="!paymentForm.controls.expYear.valid  && (paymentForm.controls.expYear.touched)">
               {{'expiration-year-required' | translate}}</p>
@@ -154,7 +164,7 @@
           <li>
             <label for="cardholderName">{{'card_holder'| translate}}:</label>
             <input type="text" id="cardholderName" data-checkout="cardholderName"
-              placeholder="{{'enter' |translate}} {{'card_holder' |translate}}" value="APRO"
+              placeholder="{{'enter' |translate}} {{'card_holder' |translate}}" value=""
               formControlName="cardname" />
             <p class="payment-error"
               *ngIf="!paymentForm.controls.cardname.valid  && (paymentForm.controls.cardname.touched)">
