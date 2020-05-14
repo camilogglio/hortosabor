@@ -1,0 +1,127 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title text-left>{{'products' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="products">
+     <div class="search">
+      <ion-searchbar [(ngModel)]="product_search" placeholder="{{'search' |translate}}" lines="none" (keyup)="searchProduct(product_search)" (ionClear)="onCancel($event)"></ion-searchbar>
+     </div>
+  </div>
+  <div *ngIf="searchResult.length>0">
+    <ion-item *ngFor="let item of searchResult" (click)="chooseItem(item)">
+      {{ item.title}}
+   </ion-item>
+  </div>
+  <div class="product-slider">
+    
+    <h2>{{selectedProduct.title}} <b>X {{selectedProduct.units}}</b></h2>
+        <p>{{selectedProduct.description}}</p> 
+        <div style="    position: absolute;
+        top: 1%;
+        left: 8px;
+        z-index: 2;
+        background: #f16000;
+        line-height: 10px;
+        padding: 4px;
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;" class="slider-arrow" (click)="slidePrev($event)">
+          <ion-icon name="ios-arrow-back"></ion-icon><span class="slide_text" style="font-size: 12px;    vertical-align: super;">{{'back' |translate}}</span>
+        </div>
+        <div style="    position: absolute;
+        top: 1%;
+        right: 8px;
+        z-index: 2;
+        background: #f16000;
+        line-height: 10px;
+        padding: 4px;
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;" class="slider-arrow" (click)="slideNext($event)">
+          <span class="slide_text" style="font-size: 12px;    vertical-align: super;">{{'next' |translate}}</span><ion-icon name="ios-arrow-forward"></ion-icon>
+        </div>
+        <div>
+          <ion-row>
+            <ion-col size="6" text-left>
+              
+            </ion-col>
+            <ion-col size="6" text-right>
+              <h3> {{selectedProduct.created_date  | date}}</h3>
+            </ion-col>
+          </ion-row>
+        </div>
+        <ion-spinner name="lines"  *ngIf="spinnerStatus ==false" text-center style="margin: 0 auto;
+        width: 100%;
+        padding-top: 58px;
+        margin-top: 50px;"></ion-spinner>
+      <ion-slides #productSlide [options]="slideOptsOne" (ionSlideDidChange)="getIndex()">
+      <ion-slide *ngFor="let proData of products let i =index"  id="{{i}}">        
+        <img  src="{{proData.images[0]}}" (click)= "presentModal(proData)"/>
+      </ion-slide>
+<!-- 
+      <ion-slide> 
+        <img src="../../assets/images/slide-2.png"/>      
+      </ion-slide>
+
+      <ion-slide>
+        <img src="../../assets/images/slide-1.png"/>
+        
+      </ion-slide>
+      <ion-slide>      
+        <img src="../../assets/images/slide-2.png"/>       
+      </ion-slide> -->
+    </ion-slides>
+    
+    <div class="price_product">
+    <ion-row>
+      <ion-col size="6">
+         <div class="price text-left">
+          <h4>{{selectedProduct.price | currency :'USD'}}</h4>
+          <!-- <p>Lorem Ipsum</p> -->
+         </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="btn-cart">
+        <ion-row>
+          <ion-col size="8" text-left class="cart-input">
+            <!-- <ion-input type="checkbox"></ion-input> -->
+            <span class="cart_quantity"> {{quantity}}</span>
+            <div class="up-down-arrow">
+            <ion-icon name="arrow-dropup" ios="ios-arrow-dropup" md="md-arrow-dropup" color="dark" (click)="addQuantity()"></ion-icon>
+            <ion-icon name="arrow-dropdown" ios="ios-arrow-dropdown" md="md-arrow-dropdown" color="dark" (click)="removeQuantity()"></ion-icon>
+          </div>
+            <!-- <img src="../../assets/images/arrow.png" class="arrow"/> -->
+          </ion-col>
+          <ion-col size="4" text-right class="ion-cart" (click)="addCart()">
+            <ion-icon name="cart" class="cart-icon">  </ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+    <div class="price-button">
+      <ion-row>
+        <ion-col size="6" text-left>
+          <h3>Total </h3>
+        </ion-col>
+        <ion-col size="6" text-right>
+          <h3><b>{{total | currency :'USD'}}</b></h3>
+        </ion-col>
+      </ion-row>
+       
+    </div>
+
+    <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo('/cartlist')" style="text-transform: uppercase;">{{'cart_list' |translate}}</ion-button>
+  </div>
+  </div>
+</ion-content>

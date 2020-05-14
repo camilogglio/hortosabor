@@ -1,0 +1,88 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title text-left>{{'status'| translate}}</ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="order-number">
+    <h3 text-center  *ngIf="ordersData.length !=0">{{'order_number' | translate}}</h3>
+    <h2 text-center  *ngIf="ordersData.length !=0">{{ordersData?.order_number}}</h2>
+    <table  *ngIf="ordersData.length !=0">
+      <tbody>
+        <tr>
+          <td>{{'delivery-address' | translate}}</td>
+          <td>{{ordersData?.delivery_address?.name}}</td>
+        </tr>
+        <tr>
+          <td>{{'delivery-date' | translate}}</td>
+          <td>{{ordersData?.delivery_date }}</td>
+        </tr>
+        <tr *ngIf="ordersData?.comment !=''">
+          <td>{{'comment' | translate}}</td>
+          <td>{{ordersData?.comment }}</td>
+        </tr>
+        <tr *ngIf="ordersData?.phone_number !=''">
+          <td>{{'phone_number' | translate}}</td>
+          <td>{{ordersData?.phone_number }}</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <!-- <ion-row>
+      <ion-col size="5">
+        <h5>Delivery Address : </h5>
+      </ion-col>
+      <ion-col size="7">
+        <p>{{ordersData?.delivery_address?.name}}</p>
+      </ion-col>
+      <ion-col size="5">
+        <h5>Delivery Date : </h5>
+      </ion-col>
+      <ion-col size="7">
+        <p >{{ordersData?.delivery_date }}</p>
+      </ion-col>
+    </ion-row> -->
+   
+    
+  </div>
+  <div class="track-order">
+    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Order received' || ordersData.length==0 || ordersData?.status=='Orden recibida'"/>
+    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Preparing'" style="left: 195px !important;"/>
+    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='On the way'" style="left: 195px !important;"/>
+    <img src="../../assets/images/marker.png" *ngIf="ordersData?.status =='Delivered'" style="left: 359px !important;"/>
+    <ol class="track-progress">
+      
+      <li class="todo" *ngFor="let data of statusArray" [ngClass]="{'done': data == ordersData?.status}">
+        <em>1</em>
+      </li>
+      <!-- <li class="todo">
+        <em>2</em>
+      </li>
+      <li class="todo">
+        <em>3</em>
+      </li>
+      <li class="todo">
+        <em>4</em>
+      </li> -->
+    </ol>
+    <img src="../../assets/images/flag.png" class="flag"/>
+    <p text-center style="    color: #00b84c;
+    margin: 0px;" *ngIf="ordersData">{{ordersData?.status |translate}}</p>
+     <p text-center style="    color: #00b84c;
+     margin: 0px;" *ngIf="ordersData.length==0">{{status}}</p>
+     </div>
+     <p text-center  *ngIf="ordersData.length!=0" class="order-status-p">Consultas por whatsapp al<br/> +54 3329 494176</p>
+ 
+   <!-- <div  class="status-download" *ngIf="ordersData ">
+    <ion-button (click)="download()">Download</ion-button>
+    </div> -->
+  <ion-button expand="block" class="ready-togobtn" *ngIf="ordersData.length !=0" (click)="download()">{{'download' | translate}}</ion-button>
+</ion-content>

@@ -1,0 +1,342 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.searchbar-input {
+    box-shadow: none !important;
+}
+ion-menu-button {
+    color: #fff;
+    font-size: 32px;
+}
+.alert-button {
+  color: #222 !important;
+}
+.alert-radio-icon {
+    left: 20px !important;
+}
+
+.alert-radio-label {
+    padding-inline-start: 30px !important;
+}
+.dialcodephone .intl-tel-input input,.dialcodephone .intl-tel-input input[type=text],.dialcodephone .intl-tel-input input[type=tel] {   
+    padding-left: 55px !important;
+}
+.calender-section .modal-wrapper {
+  height: 75%;
+  width: 90%;
+  -webkit-transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 40px, 0);
+  opacity: 0.01;
+  border-radius: 0px;
+ }
+.dialcodephone .intl-tel-input {
+    width: 100% !important;
+    margin-left: 10px !important;
+    border: 1px solid #b6b3b3 !important;
+    height: 40px !important;
+    background: #ececec !important;
+}
+.dialcodephone .intl-tel-input input {
+    border: none !important;
+    outline: none !important;
+    font-family: Dosis !important;
+    font-weight: 600 !important;
+    font-style: initial !important;
+    letter-spacing: 1px !important;
+    line-height: 32px !important;
+    background: #ececec !important;
+    width: 100% !important;
+}
+.dialcodephone .intl-tel-input .selected-flag .iti-flag {
+    margin-left: 8px !important;
+}
+.add-clientphone .intl-tel-input input,.add-clientphone .intl-tel-input input[type=text],.add-clientphone .intl-tel-input input[type=tel] {
+    padding-left: 51px !important;
+}
+.action-sheet-button{
+    height: 48px !important;
+    color: #232323 !important;
+    font-size: 15px !important;
+}
+#cardNumber {
+    background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
+    background-position: 2px -118px, 245px -56px;
+    background-size: 120px 361px, 120px 361px;
+    background-repeat: no-repeat;
+    padding-left: 54px;
+    width: 290px;
+  }
+  
+  #cardNumber.visa {
+    background-position: 2px -160px, 245px -58px;
+  }
+  
+  #cardNumber.valid.visa {
+    background-position: 2px -160px, 245px -84px;
+  }
+  
+  #cardNumber.mastercard {
+    background-position: 2px -244px, 245px -56px;
+  }
+  
+  #cardNumber.valid.mastercard {
+    background-position: 2px -243px, 245px -84px;
+  }
+  
+  #cardNumber.visa_electron {
+    background-position: 2px -202px, 245px -56px;
+  }
+  
+  #cardNumber.valid.visa_electron {
+    background-position: 2px -202px, 245px -84px;
+  }
+  
+  #cardNumber.maestro {
+    background-position: 2px -286px, 245px -56px;
+  }
+  
+  #cardNumber.valid.maestro {
+    background-position: 2px -286px, 246px -84px;
+  }
+  
+  #cardNumber.discover {
+    background-position: 2px -328px, 245px -56px;
+  }
+  
+  #cardNumber.valid.discover {
+    background-position: 2px -328px, 245px -84px;
+  }
+  span.alert-button-inner {
+    font-weight: 100;
+  }
+  @media (min-width: 375px) {
+    #cardNumber {
+      background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
+      background-position: 2px -118px, 290px -56px;
+      background-size: 120px 361px, 120px 361px;
+      background-repeat: no-repeat;
+      padding-left: 65px;
+      width: 100%;
+    }
+    
+    #cardNumber.visa {
+      background-position: 2px -160px, 290px -58px;
+    }
+  
+    #cardNumber.valid.visa {
+      background-position: 2px -160px, 290px -84px;
+    }
+  
+    #cardNumber.mastercard {
+      background-position: 2px -244px, 290px -56px;
+    }
+  
+    #cardNumber.valid.mastercard {
+      background-position: 2px -243px, 290px -84px;
+    }
+  
+    #cardNumber.visa_electron {
+      background-position: 2px -202px, 290px -56px;
+    }
+  
+    #cardNumber.valid.visa_electron {
+      background-position: 2px -202px, 290px -84px;
+    }
+  
+    #cardNumber.maestro {
+      background-position: 2px -286px, 290px -56px;
+    }
+  
+    #cardNumber.valid.maestro {
+      background-position: 2px -286px, 290px -84px;
+    }
+  
+    #cardNumber.discover {
+      background-position: 2px -328px, 290px -56px;
+    }
+  
+    #cardNumber.valid.discover {
+      background-position: 2px -328px, 290px -84px;
+    }
+  }
+  
+  @media (min-width: 360px) {
+    #cardNumber {
+      background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
+      background-position: 2px -118px, 270px -56px;
+      background-size: 120px 361px, 120px 361px;
+      background-repeat: no-repeat;
+      padding-left: 65px;
+      width: 100%;
+    }
+  
+    #cardNumber.visa {
+      background-position: 2px -160px, 270px -58px;
+    }
+  
+    #cardNumber.valid.visa {
+      background-position: 2px -160px, 270px -84px;
+    }
+  
+    #cardNumber.mastercard {
+      background-position: 2px -244px, 270px -56px;
+    }
+  
+    #cardNumber.valid.mastercard {
+      background-position: 2px -243px, 270px -84px;
+    }
+  
+    #cardNumber.visa_electron {
+      background-position: 2px -202px, 270px -56px;
+    }
+  
+    #cardNumber.valid.visa_electron {
+      background-position: 2px -202px, 270px -84px;
+    }
+  
+    #cardNumber.maestro {
+      background-position: 2px -286px, 270px -56px;
+    }
+  
+    #cardNumber.valid.maestro {
+      background-position: 2px -286px, 270px -84px;
+    }
+  
+    #cardNumber.discover {
+      background-position: 2px -328px, 270px -56px;
+    }
+  
+    #cardNumber.valid.discover {
+      background-position: 2px -328px, 270px -84px;
+    }
+  }
+  
+  
+  
+  @media (min-width: 375px) and (max-width:667px) {
+      #cardNumber {
+        background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
+        background-position: 2px -118px, 290px -56px;
+        background-size: 120px 361px, 120px 361px;
+        background-repeat: no-repeat;
+        padding-left: 65px;
+        width: 100%;
+      }
+    
+      #cardNumber.visa {
+        background-position: 2px -160px, 290px -56px;
+      }
+    
+      #cardNumber.valid.visa {
+        background-position: 2px -160px, 290px -84px;
+      }
+    
+      #cardNumber.mastercard {
+        background-position: 2px -244px, 290px -56px;
+      }
+    
+      #cardNumber.valid.mastercard {
+        background-position: 2px -243px, 290px -84px;
+      }
+    
+      #cardNumber.visa_electron {
+        background-position: 2px -202px, 290px -56px;
+      }
+    
+      #cardNumber.valid.visa_electron {
+        background-position: 2px -202px, 290px -84px;
+      }
+    
+      #cardNumber.maestro {
+        background-position: 2px -286px, 290px -56px;
+      }
+    
+      #cardNumber.valid.maestro {
+        background-position: 2px -286px, 290px -84px;
+      }
+    
+      #cardNumber.discover {
+        background-position: 2px -328px, 290px -56px;
+      }
+    
+      #cardNumber.valid.discover {
+        background-position: 2px -328px, 290px -84px;
+      }
+    }
+    @media (min-width: 411px) {
+      #cardNumber {
+        background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
+        background-position: 2px -118px, 330px -56px;
+        background-size: 120px 361px, 120px 361px;
+        background-repeat: no-repeat;
+        padding-left: 65px;
+        width: 100%;
+      }
+    
+      #cardNumber.visa {
+        background-position: 2px -160px, 330px -56px;
+      }
+    
+      #cardNumber.valid.visa {
+        background-position: 2px -160px, 330px -84px;
+      }
+    
+      #cardNumber.mastercard {
+        background-position: 2px -244px, 330px -56px;
+      }
+    
+      #cardNumber.valid.mastercard {
+        background-position: 2px -243px, 330px -84px;
+      }
+    
+      #cardNumber.visa_electron {
+        background-position: 2px -202px, 330px -56px;
+      }
+    
+      #cardNumber.valid.visa_electron {
+        background-position: 2px -202px, 330px -84px;
+      }
+    
+      #cardNumber.maestro {
+        background-position: 2px -286px, 330px -56px;
+      }
+    
+      #cardNumber.valid.maestro {
+        background-position: 2px -286px, 330px -84px;
+      }
+    
+      #cardNumber.discover {
+        background-position: 2px -328px, 330px -56px;
+      }
+    
+      #cardNumber.valid.discover {
+        background-position: 2px -328px, 330px -84px;
+      }
+    }
+  
+    
+  /* **** **** **** **** **** **** **** **** **** */

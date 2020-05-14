@@ -1,0 +1,127 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title text-left>{{'cart_list' |translate}}</ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-row class="cart-labels" text-center>
+    <ion-col size="2" >
+      <label>{{'qty' | translate}}</label>
+     </ion-col>
+     <ion-col size="4">
+       <label>{{'products' | translate}}</label>
+     </ion-col>
+     <ion-col size="3">
+      <label>{{'price' | translate}}</label>
+    </ion-col>
+    <ion-col size="3">
+      <label>Total</label>
+    </ion-col>
+  </ion-row>
+  <div *ngIf="cartList.length>0">
+    <ion-row class="cart-list" *ngFor="let cart of cartList; let i = index"  [ngClass]="{'active': cart.selectedstatus == true}"  (click)="SelectedProduct(cart,i)">
+      <!-- <div > -->
+        <ion-col size="2" >
+          <p class="count">{{cart.quantity}}</p>
+         </ion-col>
+         <ion-col size="4">
+           <div class="product-img">
+             <img src="../../assets/images/Orange.png" *ngIf="cart.images.length ==0"
+             />
+             <img src="{{cart.images[0]}}" *ngIf="cart.images.length>0"
+             />
+            
+           </div>
+           <h4 style="font-size:13px;">{{cart.title}} X {{cart.units}}</h4>
+         </ion-col>
+         <ion-col size="3">
+           <h5 class="price">{{cart.price | currency: 'USD'}}</h5>
+         </ion-col>
+         <ion-col size="3">
+           <h5 class="price">{{cart.subtotal | currency: 'USD'}}</h5>
+         </ion-col>
+      <!-- </div>    -->
+    </ion-row>
+     <!-- <ion-row class="cart-list">
+    <ion-col size="1">
+     <p class="count">2</p>
+    </ion-col>
+    <ion-col size="5">
+      <div class="product-img">
+        <img src="../../assets/images/Banana.png"/>
+        <h4>Banana X 1Kg</h4>
+      </div>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+  </ion-row> -->
+  <!-- <ion-row class="cart-list">
+    <ion-col size="1">
+     <p class="count">3</p>
+    </ion-col>
+    <ion-col size="5">
+      <div class="product-img">
+        <img src="../../assets/images/Tomatos.png"/>
+        <h4>Banana X 1Kg</h4>
+      </div>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+    <ion-col size="3">
+      <h5 class="price">$55.00</h5>
+    </ion-col>
+  </ion-row> -->
+  <ion-row text-center class="carticons">
+    <ion-col size="4">
+      <div class="cart-icons" (click)="add_quantity()">
+        <img src="../../assets/images/plus.png"/>
+        <p>{{'add'|translate}}</p>
+      </div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="cart-icons" (click)="remove_quantity()">
+       <img src="../../assets/images/minus.png"/>
+       <p>{{'reduce'|translate}}</p>
+      </div>
+    </ion-col>
+    <ion-col size="4">
+      <div class="cart-icons" (click)="remove()">
+         <img src="../../assets/images/delete.png"/>
+         <p>{{'eliminate'|translate}}</p>
+      </div>
+    </ion-col>
+  </ion-row>
+  <div class="footer-btn">
+  <div class="price-button">
+    <ion-row>
+      <ion-col size="6" text-left>
+        <h3>Total </h3>
+      </ion-col>
+      <ion-col size="6" text-right>
+        <h2><b>{{total | currency: 'USD'}}</b></h2>
+      </ion-col>
+    </ion-row>
+  
+  </div>
+
+  <ion-button lines="none" class="cart-buttons" expand="block" fill="outline" (click)="goTo()">{{'buy'|translate}}</ion-button>
+</div> 
+  </div>
+<div *ngIf="cartList.length==0">
+<p text-center>{{'no-product-found' | translate}}</p>
+</div>
+ 
+</ion-content>

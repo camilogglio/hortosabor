@@ -1,0 +1,252 @@
+<ion-header class="header-top">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-left>{{'payment'|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-icon name="search"></ion-icon>
+      <ion-icon name="md-more"></ion-icon> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="payment-method" text-center>
+    <ion-row>
+      <ion-col size="4" (click)="chooseType('cash')">
+        <img src="../../assets/images/cash.png" *ngIf="card_Image == false " />
+        <img src="../../assets/images/Wallet.png" *ngIf="card_Image == true " />
+        <p [ngClass]="{'active': card_Image == true}">{{'cash' | translate}}</p>
+      </ion-col>
+      <ion-col size="4" (click)="chooseType('credit')">
+        <img src="../../assets/images/debit.png" *ngIf="activeImage == false" />
+        <img src="../../assets/images/credit.png" *ngIf="activeImage == true" />
+        <p [ngClass]="{'active': activeImage == true}">{{'credit-card' | translate}}</p>
+      </ion-col>
+      <ion-col size="4" (click)="chooseType('debit')">
+        <img src="../../assets/images/debit.png" *ngIf="active_Image == false" />
+        <img src="../../assets/images/credit.png" *ngIf="active_Image == true" />
+        <p [ngClass]="{'active': active_Image == true}">{{'debit-card' | translate}}</p>
+      </ion-col>
+     
+    </ion-row>
+  </div>
+  
+  <div class="authorize_text">
+    <h2>{{'cash_text' | translate}}</h2>
+    <h2>{{'authorize_for' |translate}} {{total | currency:'USD'}}</h2>
+  </div>
+  <div class="payment-cards " text-center *ngIf="active_Image || activeImage">
+    <p>{{'we_accept'|translate}}</p>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="2">
+        <img src="../../assets/images/visa1.png" />
+      </ion-col>
+      <ion-col size="2">
+        <img src="../../assets/images/visa2.png" />
+      </ion-col>
+      <ion-col size="2">
+        <img src="../../assets/images/visa3.png" />
+      </ion-col>
+      <ion-col size="2">
+        <img src="../../assets/images/visa4.png" />
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+  </div>
+  <div class="payment-form">
+    <h4 text-center class="payment_invoiceheading">{{'information_for_invocie' |translate}}</h4>
+    <div class="user-info">
+      <form [formGroup]="cardForm" autocomplete="on">
+        <ion-row>
+          <ion-col size="6">
+            <ion-input type="text" placeholder="{{'name' |translate}}" formControlName="name"></ion-input>
+            <p class="payment-error" *ngIf="cardForm.get('name').hasError('required') && cardForm.get('name').touched">
+              {{'name' |translate}} {{'is-required' | translate}}</p>
+          </ion-col>
+          <ion-col size="6">
+            <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+            <p class="payment-error"
+              *ngIf="cardForm.get('email').hasError('required') && cardForm.get('email').touched">
+              {{'email-address' | translate}}</p>
+            <p class="payment-error" *ngIf="cardForm.get('email').hasError('pattern') && cardForm.get('email').touched">
+              {{'invalid-email-address' | translate}}.</p>
+          </ion-col>
+
+          <ion-col size="6">
+            <input id="phone-no" type="hidden" placeholder="Mobile" formControlName="dailcode" class="signupdailcode">
+            <input type="tel" id="mobileno" formControlName="phone" (keyup)="updatephone($event)"
+              placeholder="9874512630" maxlength="10">
+            <!-- <input type="tel" placeholder="Phone"  formControlName="phone" maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"/> -->
+            <p class="payment-error"
+              *ngIf="cardForm.get('phone').hasError('required') && cardForm.get('phone').touched">
+              {{'phone-number-required' | translate}}</p>
+            <!-- <p class="payment-error"  *ngIf="cardForm.controls.phone.hasError('pattern')">Invalid phone number.</p> -->
+          </ion-col>
+
+          <ion-col size="6">
+            <!-- <label for="local_id">{{'local_id' |translate}} :  </label>({{'optional' |translate}}) -->
+            <ion-input type="tel" placeholder="{{'local_id' |translate}}({{'optional' |translate}})" formControlName="local_id"></ion-input>
+            
+            <!-- <p class="payment-error"
+              *ngIf="cardForm.get('local_id').hasError('required') && cardForm.get('local_id').touched"> -->
+              <!-- {{'local_id' |translate}} {{'is-required' | translate}}</p> -->
+          </ion-col>
+         
+          <ion-col size="6">
+            <label for="address">{{'delivery-address' |translate}} :  </label>({{'optional' |translate}})
+            <ion-input type="text" placeholder="Delivery Address" disabled formControlName="address" 
+              ></ion-input>
+          </ion-col>
+          <!-- <ion-col size="6">
+            <label for="delivery_date">{{'delivery-date' |translate}} :  </label>({{'optional' |translate}})
+            <ion-input type="text" placeholder="Delivery Date" formControlName="delivery_date"
+              ></ion-input>
+            </ion-col> -->
+            
+        </ion-row>
+      </form>
+    </div>
+    <form action="" method="post" id="pay" name="pay" [formGroup]="paymentForm" *ngIf="active_Image || activeImage">
+      <fieldset>
+        <ul>
+          <!-- <li>
+          <label for="email">Email</label>
+          <input id="email"  value="test_user_19653727@testuser.com" type="email"
+            placeholder="your email"  formControlName="email"/>
+            <p class="payment-error" *ngIf="!paymentForm.controls.email.valid  && (paymentForm.controls.email.touched)">Email address is required</p>
+            <p class="payment-error" *ngIf="paymentForm.get('email').hasError('pattern') && paymentForm.get('email').touched">Invalid email address.</p>
+        
+        </li> -->
+          <li>
+            <label for="docType">Tipo de documento:</label>
+            <ion-select placeholder="Seleccione el tipo de documento" id="docType" formControlName="docType" data-checkout="docType" okText="{{'okay' | translate}}" cancelText="{{'dismiss' | translate}}">
+              <ion-select-option *ngFor="let type of doctypes" value="{{type.id}}">{{type.name}}</ion-select-option>
+            </ion-select>
+          </li>
+          <li>
+            <label for="docNumber">Número de documento:</label>
+            <input type="text" id="docNumber" formControlName="docNumber" data-checkout="docNumber" placeholder="12345678" value="" />
+          </li>
+          <li>
+            <label for="cardNumber">{{'card_number' | translate}}:</label>
+            <input type="tel" id="cardNumber" data-checkout="cardNumber" placeholder="0000000000000000"
+              value="" formControlName="cardnumber" (keyup)="validateCard($event.target)" />
+            <p class="payment-error"
+              *ngIf="paymentForm.get('cardnumber').hasError('required') && paymentForm.get('cardnumber').touched">
+              {{'card_number' |translate}} {{'is-required' | translate}}</p>
+            <p class="payment-error"
+              *ngIf="paymentForm.get('cardnumber').hasError('pattern') && paymentForm.get('cardnumber').touched">
+              {{'card_number_error' |translate}}</p>
+          </li>
+          <li>
+            <label for="securityCode">{{'cvv' |translate}}:</label>
+            <ion-input type="number" formControlName="cvv" placeholder="123" (input)="validatecvv($event.target)"
+              id="securityCode" data-checkout="securityCode"></ion-input>
+            <!-- <input ype="tel" maxlength="4" id="securityCode" data-checkout="securityCode" placeholder="123" value="123" formControlName="cvv" (input)="validatecvv($event.target)"/> -->
+            <p class="payment-error" *ngIf="!paymentForm.controls.cvv.valid  && (paymentForm.controls.cvv.touched)">
+              {{'cvv' |translate}} {{'is-required' | translate}}</p>
+          </li>
+          <li>
+            <label for="cardExpirationMonth">{{'expiration_date' |translate}}:</label>
+            <ion-datetime cancelText="{{'cancel' | translate}}" doneText="{{'done' | translate}}" displayFormat="MM/YYYY" pickerFormat="MMMM YYYY"
+              min="{{minDate}}" max="{{maxDate}}" formControlName="expDate" placeholder="MM/YYYY" (ionChange)="check()">
+            </ion-datetime>
+            <p class="payment-error"
+              *ngIf="paymentForm.get('expDate').hasError('required') && paymentForm.get('expDate').touched">
+              {{'please-enter-valid' | translate}} {{'expiration_date' |translate}}</p>
+          </li>
+          <li style="display: none;">
+            <label for="cardExpirationMonth">{{'expiration-month' | translate}}:</label>
+            <input type="tel" maxlength="2" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
+              placeholder="12" value="" formControlName="expMonth" />
+            <p class="payment-error"
+              *ngIf="!paymentForm.controls.expMonth.valid  && (paymentForm.controls.expMonth.touched)">
+              {{'expiration-month-required' | translate}}</p>
+          </li>
+          <li style="display: none;">
+            <label for="cardExpirationYear">{{'expiration-year' | translate}}:</label>
+            <input type="tel" maxlength="4" id="cardExpirationYear" data-checkout="cardExpirationYear"
+              placeholder="2015" value="" formControlName="expYear" />
+            <p class="payment-error"
+              *ngIf="!paymentForm.controls.expYear.valid  && (paymentForm.controls.expYear.touched)">
+              {{'expiration-year-required' | translate}}</p>
+          </li>
+          <li>
+            <label for="cardholderName">{{'card_holder'| translate}}:</label>
+            <input type="text" id="cardholderName" data-checkout="cardholderName"
+              placeholder="{{'enter' |translate}} {{'card_holder' |translate}}" value=""
+              formControlName="cardname" />
+            <p class="payment-error"
+              *ngIf="!paymentForm.controls.cardname.valid  && (paymentForm.controls.cardname.touched)">
+              {{'card_holder' |translate}} {{'is-required' | translate}}</p>
+
+          </li>
+        </ul>
+        <input type="submit" value="{{'authorize' | translate}}" class="price-button"
+          [disabled]="cardForm.invalid || paymentForm.invalid " (click)="pay()" />
+      </fieldset>
+    </form>
+    <ion-button type="submit" expand="block" class="price-button" (click)="confirm_payment()"
+      [disabled]="cardForm.invalid" *ngIf="card_Image">{{'authorize' | translate}}</ion-button>
+  </div>
+  <!-- <div class="payment-form">
+    <form [formGroup]="cardForm" autocomplete="on" >
+    <div class="user-info">
+      <ion-row>
+        <ion-col size="6">
+          <ion-input type="text" placeholder="Name"  formControlName="name"></ion-input>
+          <p class="payment-error" *ngIf="!cardForm.controls.name.valid  && (cardForm.controls.name.dirty || submitAttempt)">Name is required</p>
+        
+  
+        </ion-col>
+        <ion-col size="6">
+          <ion-input type="text" placeholder="Phone"  formControlName="phone" maxlength="10"></ion-input>
+          <p class="payment-error" *ngIf="!cardForm.controls.phone.valid  && (cardForm.controls.phone.dirty || submitAttempt)">Phone number is required</p>
+          <p class="payment-error"  *ngIf="cardForm.controls.phone.hasError('pattern')">Invalid phone number.</p>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input type="email" placeholder="Email"  formControlName="email"></ion-input>
+          <p class="payment-error" *ngIf="!cardForm.controls.email.valid  && (cardForm.controls.email.dirty || submitAttempt)">Email address is required</p>
+          <p class="payment-error" *ngIf="cardForm.get('email').hasError('pattern') && cardForm.get('email').touched">Invalid email address.</p>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input type="text" placeholder="Local ID Number"  formControlName="local_id"></ion-input>
+          <p class="payment-error" *ngIf="!cardForm.controls.local_id.valid  && (cardForm.controls.local_id.dirty || submitAttempt)">Local ID is required</p>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row  *ngIf="active_Image || activeImage">
+      <ion-col size="12" >
+        <input type="number" placeholder="**** **** 1234"  formControlName="cardnumber" id="card_number" (keyup)="validateCard($event.target)">
+
+      </ion-col>
+      <ion-col size="6">
+        <ion-datetime
+        displayFormat="MM/YYYY"
+        pickerFormat="MMMM YYYY"
+        min="{{minDate}}"
+        max="{{maxDate}}"
+        formControlName="expDate"
+        placeholder="MM/YYYY"
+      ></ion-datetime>
+        <img src="../../assets/images/card.png" />
+        <p class="payment-error" *ngIf="!cardForm.controls.expDate.valid  && (cardForm.controls.expDate.dirty || submitAttempt)">Please enter a valid expiration date</p>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input  type="number"
+        formControlName="cvv"
+        placeholder="CVV"
+        (input)="validatecvv($event.target)"></ion-input>
+        <img src="../../assets/images/lock.png" class="lock" />
+        <p class="cvv-error payment-error" *ngIf="!cardForm.controls.cvv.valid  && (cardForm.controls.cvv.dirty || submitAttempt)">CVV is required</p>
+          
+      </ion-col>
+    </ion-row>
+    </form>
+  </div> -->
+
+  <!-- <ion-button expand="block" class="price-button" (click)="pay()" [disabled]="cardForm.invalid">AUTHORIZE</ion-button> -->
+</ion-content>
