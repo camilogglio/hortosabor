@@ -82,6 +82,22 @@ ion-menu-button {
     color: #232323 !important;
     font-size: 15px !important;
 }
+.input-div {
+  width: 80%;
+  display: inline-block;
+  .intl-tel-input {
+      width: 100% !important;
+      vertical-align: sub !important;
+      .input-reciept {
+          width: 100% !important;
+          border: none !important;
+          outline: none !important;
+          padding-top: 10px !important;
+          padding-bottom: 10px !important;
+      }
+  }
+}
+// 
 #cardNumber {
     background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);
     background-position: 2px -118px, 245px -56px;

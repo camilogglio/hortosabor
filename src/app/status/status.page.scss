@@ -162,6 +162,18 @@ $break-small: 480px;
  border: 0.5px solid #b5b0b0;
  padding: 8px;
 }
+.order-number {
+  tbody {
+    width: 100%;
+  }
+  tr {
+    width: 100%;
+  }
+  td {
+    width: 100%;
+  }
+}
+
   @media (max-width:320px){
     .order-number h2{
        font-size: 24px;

@@ -66,20 +66,9 @@
         margin-top: 50px;"></ion-spinner>
       <ion-slides #productSlide [options]="slideOptsOne" (ionSlideDidChange)="getIndex()">
       <ion-slide *ngFor="let proData of products let i =index"  id="{{i}}">        
-        <img  src="{{proData.images[0]}}" (click)= "presentModal(proData)"/>
-      </ion-slide>
-<!-- 
-      <ion-slide> 
-        <img src="../../assets/images/slide-2.png"/>      
+        <img  src="{{proData.images[0]}}" (click)= "presentModal(proData)" onerror="this.onerror=null;this.src='assets/images/default.jpg';" />
       </ion-slide>
 
-      <ion-slide>
-        <img src="../../assets/images/slide-1.png"/>
-        
-      </ion-slide>
-      <ion-slide>      
-        <img src="../../assets/images/slide-2.png"/>       
-      </ion-slide> -->
     </ion-slides>
     
     <div class="price_product">

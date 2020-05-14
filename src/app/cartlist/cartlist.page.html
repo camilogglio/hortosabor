@@ -35,9 +35,9 @@
          <ion-col size="4">
            <div class="product-img">
              <img src="../../assets/images/Orange.png" *ngIf="cart.images.length ==0"
-             />
+             onerror="this.onerror=null;this.src='assets/images/default.jpg';" />
              <img src="{{cart.images[0]}}" *ngIf="cart.images.length>0"
-             />
+             onerror="this.onerror=null;this.src='assets/images/default.jpg';" />
             
            </div>
            <h4 style="font-size:13px;">{{cart.title}} X {{cart.units}}</h4>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform ,Events} from '@ionic/angular';
+import { Platform ,Events, NavController} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MenuController } from '@ionic/angular'
@@ -62,6 +62,7 @@ export class AppComponent {
     public router:Router,
     public events :Events,
     public api:ApiService,
+    public navCtrl: NavController,
     public translate: TranslateService,
   ) {
     this.initializeApp();
@@ -71,7 +72,9 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 1000);
     });
 
     // this.translate.setDefaultLang('es');
@@ -118,9 +121,10 @@ export class AppComponent {
   gotoPage(url: any) {
     this.selectedItem = url;
     if(url =='/status'){
-    this.events.publish('status:created', Date.now());
+      this.events.publish('status:created', Date.now());
     }
-    this.router.navigateByUrl(url);
+    // this.router.navigateByUrl(url);
+    this.navCtrl.navigateRoot(url);
   }
   closemenu() {
     this.menu.close();

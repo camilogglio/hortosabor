@@ -44,7 +44,8 @@ export class PaymentPage implements OnInit {
     hideurlbar: 'yes',
     toolbarcolor: '#00b84c',
     clearcache: 'yes',
-    clearsessioncache: 'yes'
+    clearsessioncache: 'yes',
+    zoom: 'no'
   }
   constructor(public translate: TranslateService, public iab: InAppBrowser, public events: Events, public cart: CartService, public api: ApiService, public navCtrl: NavController, public formBuilder: FormBuilder, public route: ActivatedRoute, public router: Router) {
     this.card_Image = true;
@@ -63,8 +64,8 @@ export class PaymentPage implements OnInit {
       }
     })
     //Mercadopago.setPublishableKey("TEST-e8c047d4-726a-4e98-b9bb-218484a3baf5");
-    Mercadopago.setPublishableKey("APP_USR-6f9e609a-d6be-4d61-b84f-cacd8bd99a19");
-    Mercadopago.getIdentificationTypes((res, data) => { this.doctypes = data });
+    // Mercadopago.setPublishableKey("APP_USR-6f9e609a-d6be-4d61-b84f-cacd8bd99a19");
+    // Mercadopago.getIdentificationTypes((res, data) => { this.doctypes = data });
     this.maxDate = moment(moment(this.date, 'YYYY-MM-DD')).format('YYYY-MM-DD');
     this.total = this.cart.calculateTotal();
     this.cardForm = this.formBuilder.group({
@@ -109,14 +110,7 @@ export class PaymentPage implements OnInit {
         this.comments = '';
       }
     }
-    // this.route.queryParams.subscribe(params => {
-    //   if (params && params.value) {
-    //     this.navData = JSON.parse(params.value);
-    //     console.log(this.navData);
-    //     this.cardForm.controls.delivery_address.setValue(this.navData.place)
-    //     this.cardForm.controls.delivery_date.setValue(this.navData.deliveryDate)
-    //   }
-    // });
+
     if (JSON.parse(localStorage.getItem('deliveryData'))) {
 
       this.cardForm.controls.address.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryAddress)
@@ -127,17 +121,14 @@ export class PaymentPage implements OnInit {
   ngOnInit() {
     $(".accordion__answer:first").show();
     $(".accordion__question:first").addClass("expanded");
-    // var phone = document.getElementById("mobileno");
     setTimeout(() => {
       $("#mobileno").intlTelInput({
         hiddenInput: "phone-no",
         initialCountry: "ar",
         utilsScript: "assets/js/utils.js"
       });
-      // $("#mobileno").usPhoneFormat();
     }, 100);
 
-    // document.getElementById("role-button1").classList.add("btn-activated");
   }
   check() {
     console.log(this.paymentForm.value.expDate);
@@ -162,91 +153,45 @@ export class PaymentPage implements OnInit {
       // this.card_Image = false;
       // this.activeImage = true;
       // this.saveOrder({});
-      const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total, '_blank', this.iabOption);
-      browser.on('loadstop').subscribe(event => {
-        console.log('loadstop:: ', event);
-        var url = event.url.substring(0, 10);
-        if (url == 'success://') {
-          browser.close();
-          var url1 = new URL(url);
-          var search_params = url1.searchParams;
-          console.log('search_params:: ', search_params);
-          var param = JSON.parse(search_params.get('data'))
-          if (search_params.has('data')) {
-            console.log(search_params.get('data'))
-          }
-          this.saveOrder(param);
-          // this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(param.id) } });
-        }
-      });
-      browser.on('loadstart').subscribe(event => {
-        console.log('loadstart:: ', event);
-        var url = event.url.substring(0, 10);
-        if (url == 'success://') {
-          browser.close();
-          var url1 = new URL(url);
-          var search_params = url1.searchParams;
-          console.log('search_params:: ', search_params);
-          var param = JSON.parse(search_params.get('data'))
-          if (search_params.has('data')) {
-            console.log(search_params.get('data'))
-          }
-          this.saveOrder(param);
-          // this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(param.id) } });
-        }
-      });
-      browser.on('loaderror').subscribe(event => {
-        console.log('loaderror:: ', event);
-      });
-      browser.on('exit').subscribe(event => {
-        console.log('exit:: ', event);
-      });
+      this.cardTypePayment();
     }
     if (value == 'debit') {
       // this.card_Image = false;
       // this.activeImage = false;
       // this.active_Image = true;
-      const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total, '_blank', this.iabOption);
-      browser.on('loadstop').subscribe(event => {
-        console.log('loadstop:: ', event);
-        var url = event.url.substring(0, 10);
-        if (url == 'success://') {
-          browser.close();
-          var url1 = new URL(url);
-          var search_params = url1.searchParams;
-          console.log('search_params:: ', search_params);
-          var param = JSON.parse(search_params.get('data'));
-          if (search_params.has('data')) {
-            console.log(search_params.get('data'))
-          }
-          this.saveOrder(param);
-          // this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(param.id) } });
-        }
-      });
-      browser.on('loadstart').subscribe(event => {
-        console.log('loadstart:: ', event);
-        var url = event.url.substring(0, 10);
-        if (url == 'success://') {
-          browser.close();
-          var url1 = new URL(url);
-          var search_params = url1.searchParams;
-          console.log('search_params:: ', search_params);
-          var param = JSON.parse(search_params.get('data'))
-          if (search_params.has('data')) {
-            console.log(search_params.get('data'))
-          }
-          this.saveOrder(param);
-          // this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(param.id) } });
-        }
-      });
-      browser.on('loaderror').subscribe(event => {
-        console.log('loaderror:: ', event);
-      });
-      browser.on('exit').subscribe(event => {
-        console.log('exit:: ', event);
-      });
+      this.cardTypePayment();
     }
 
+  }
+
+  cardTypePayment() {
+    const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total, '_blank', this.iabOption);
+    browser.on('loadstop').subscribe(event => {
+      console.log('loadstop:: ', event);
+      var url = event.url.substring(0, 10);
+      if (url == 'success://') {
+        browser.close();
+        var data = event.url.split('=');
+        console.log('payment success data ', data[1], '\n', JSON.parse(data[1]));
+        this.saveOrder(JSON.parse(data[1]));
+      }
+    });
+    browser.on('loadstart').subscribe(event => {
+      console.log('loadstart:: ', event);
+      var url = event.url.substring(0, 10);
+      if (url == 'success://') {
+        browser.close();
+        var data = event.url.split('=');
+        console.log('payment success data loadstart ', data[1], '\n', JSON.parse(data[1]));
+        this.saveOrder(JSON.parse(data[1]));
+      }
+    });
+    browser.on('loaderror').subscribe(event => {
+      console.log('loaderror:: ', event);
+    });
+    browser.on('exit').subscribe(event => {
+      console.log('exit:: ', event);
+    });
   }
 
   validatecvv(cvv) {
@@ -383,34 +328,6 @@ export class PaymentPage implements OnInit {
 
   saveOrder(data: any) {
     const url = '/orders';
-    // data = { "paymentRes": { "card": { }, "status": "approved", "statement_descriptor": "HORTOSABOR", "id": 25508841 }, 
-    //           "data": { "cardholderName": "Test MP", "email": "test@test.com", "phone-no": "", 
-    //                     "phone": "98653265", "direccion": "", "local": "", "address": "", 
-    //                     "transaction_amount": "3000", "cardNumber": "4509953566233704", 
-    //                     "cardExpirationMonth": "05", "cardExpirationYear": "2025", 
-    //                     "securityCode": "112", "installments": "1", "docType": "Otro", 
-    //                     "docNumber": "89562358", "payment_method_id": "visa", 
-    //                     "token": "a0f4a9900665241e8bd60cf5f111b19c", 
-    //                     "response": { 
-    //                         "id": "a0f4a9900665241e8bd60cf5f111b19c", 
-    //                         "public_key": "TEST-e8c047d4-726a-4e98-b9bb-218484a3baf5", 
-    //                         "first_six_digits": "450995", "expiration_month": 5, 
-    //                         "expiration_year": 2025, "last_four_digits": "3704", 
-    //                         "cardholder": { 
-    //                             "identification": { 
-    //                               "number": "undefined", "type": "Otro" 
-    //                             }, 
-    //                             "name": "Test MP" 
-    //                           }, 
-    //                           "status": "active", "date_created": "2020-05-12T01:36:12.000-04:00", 
-    //                           "date_last_updated": "2020-05-12T01:36:26.888-04:00", 
-    //                           "date_due": "2020-05-20T01:36:12.000-04:00", 
-    //                           "luhn_validation": true, "live_mode": false, 
-    //                           "require_esc": false, "card_number_length": 16, 
-    //                           "security_code_length": 3 
-    //                         } 
-    //                   }
-    //         }
     let params: any = {
       product: this.products,
       delivery_address: JSON.parse(localStorage.getItem('deliveryData')).place,
@@ -440,12 +357,9 @@ export class PaymentPage implements OnInit {
       } else {
         var message = this.translate.defaultLang == 'es' ? 'Pedido Enviado Correctamente.' : 'Order Submitted Successfully.';
         this.api.presentToast(message);
-        // this.cardForm.reset();
-        // this.paymentForm.reset();
-        // // localStorage.removeItem('deliveryData');
-        // localStorage.removeItem('cart_data');
-
-        // this.events.publish('delivery:created', Date.now());
+        this.cardForm.reset();
+        this.paymentForm.reset();
+        localStorage.removeItem('cart_data');
         this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
       }
 
@@ -456,6 +370,8 @@ export class PaymentPage implements OnInit {
       }, 1000);
     });
   }
+
+
   updatephone(evn) {
     console.log(evn.target.value);
     var s = evn.target.value;
