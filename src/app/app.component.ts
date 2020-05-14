@@ -123,8 +123,8 @@ export class AppComponent {
     if(url =='/status'){
       this.events.publish('status:created', Date.now());
     }
-    // this.router.navigateByUrl(url);
-    this.navCtrl.navigateRoot(url);
+    this.router.navigateByUrl(url);
+    // this.navCtrl.navigateRoot(url);
   }
   closemenu() {
     this.menu.close();

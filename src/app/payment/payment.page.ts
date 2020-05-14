@@ -327,6 +327,7 @@ export class PaymentPage implements OnInit {
   };
 
   saveOrder(data: any) {
+    this.api.showLoader();
     const url = '/orders';
     let params: any = {
       product: this.products,
@@ -351,7 +352,7 @@ export class PaymentPage implements OnInit {
       console.log('res:- ', data);
       setTimeout(() => {
         this.api.hideLoader();
-      }, 1000);
+      }, 2000);
       if (data.error) {
         this.api.presentToast(data.error.message);
       } else {
@@ -360,7 +361,9 @@ export class PaymentPage implements OnInit {
         this.cardForm.reset();
         this.paymentForm.reset();
         localStorage.removeItem('cart_data');
-        this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
+        setTimeout(() => {
+          this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
+        }, 1000);
       }
 
     }, err => {
