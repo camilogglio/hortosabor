@@ -110,7 +110,7 @@ export class PaymentPage implements OnInit {
         this.comments = '';
       }
     }
-
+    // this.saveOrder({});
     if (JSON.parse(localStorage.getItem('deliveryData'))) {
 
       // this.cardForm.controls.address.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryAddress)
@@ -167,6 +167,7 @@ export class PaymentPage implements OnInit {
   }
 
   cardTypePayment() {
+    // this.saveOrder({});
     const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total+'/'+this.translate.defaultLang, '_blank', this.iabOption);
     browser.on('loadstop').subscribe(event => {
       console.log('loadstop:: ', event);
@@ -330,6 +331,7 @@ export class PaymentPage implements OnInit {
 
   saveOrder(data: any) {
     this.api.showLoader();
+    // data = '{"paymentRes":{"card":{},"status":"approved","statement_descriptor":"HORTOSABOR","id":25637399},"data":{"cardholderName":"Test MP","email":"test@test.com","phone-no":"","phone":"+54964636647","address":"","cardNumber":"4509953566233704","cardExpirationMonth":"05","cardExpirationYear":"2025","securityCode":"852","installments":"1","docType":"Otro","docNumber":"89562358","payment_method_id":"visa","token":"ad6632d6acf2b9593247a753347a74f5","country":"54","response":{"id":"ad6632d6acf2b9593247a753347a74f5","public_key":"TEST-e8c047d4-726a-4e98-b9bb-218484a3baf5","first_six_digits":"450995","expiration_month":5,"expiration_year":2025,"last_four_digits":"3704","cardholder":{"identification":{"number":"undefined","type":"Otro"},"name":"Test MP"},"status":"active","date_created":"2020-05-15T08:52:54.000-04:00","date_last_updated":"2020-05-15T08:53:19.367-04:00","date_due":"2020-05-23T08:52:54.000-04:00","luhn_validation":true,"live_mode":false,"require_esc":false,"card_number_length":16,"security_code_length":3}}}';
     const url = '/orders';
     let params: any = {
       product: this.products,
@@ -338,7 +340,7 @@ export class PaymentPage implements OnInit {
       address: data.data.address,
       phone_number: data.data.phone,
       email: data.data.email,
-      local_id: data.data.local,
+      local_id: data.data.docNumber,
       total_price: this.total,
       payment_type: 'card',
       lang: this.translate.defaultLang,
@@ -366,10 +368,10 @@ export class PaymentPage implements OnInit {
         this.paymentForm.reset();
         localStorage.removeItem('cart_data');
         this.events.publish('updateCart', Date.now());
-        setTimeout(() => {
-          this.api.hideLoader();
-          this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
-        }, 1000);
+
+        this.api.hideLoader();
+        this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
+
       }
 
     }, err => {

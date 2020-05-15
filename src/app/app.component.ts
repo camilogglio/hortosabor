@@ -115,7 +115,7 @@ export class AppComponent {
       this.events.publish('status:created', Date.now());
     } 
     if (url == '/cartlist') {
-      this.events.publish('updateCart', Date.now());
+      this.events.publish('updateCartmenu', Date.now());
     }
     this.navCtrl.navigateRoot(url);
     // this.navCtrl.navigateRoot(url);

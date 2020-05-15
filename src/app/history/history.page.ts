@@ -28,7 +28,7 @@ export class HistoryPage implements OnInit {
     setTimeout(() => {
       $("#historymobileno").intlTelInput({
         hiddenInput: "phone-no",
-        initialCountry: "gb",
+        initialCountry: "ar",
         utilsScript: "assets/js/utils.js"
       });
       // $("#mobileno").usPhoneFormat();

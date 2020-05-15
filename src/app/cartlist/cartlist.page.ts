@@ -35,6 +35,9 @@ export class CartlistPage implements OnInit {
         });
       }
     }
+    if(this.total<=0) {
+      localStorage.removeItem('cart_data');
+    }
 
     console.log('CONSTRUCTOR');
     this.events.subscribe('updateCart', (time) => {
@@ -51,7 +54,23 @@ export class CartlistPage implements OnInit {
         }
       }
     });
+    this.events.subscribe('updateCartmenu', (time) => {
+      setTimeout(() => {
+        console.log('Constructor event updateCartmenu');
+        this.total = this.cart.calculateTotal();
+        console.log(JSON.parse(localStorage.getItem('cart_data')))
+        if (JSON.parse(localStorage.getItem('cart_data'))) {
+          if (JSON.parse(localStorage.getItem('cart_data')).length > 0) {
+            this.cartList = JSON.parse(localStorage.getItem('cart_data'));
+            this.cartList.forEach(element => {
+              element.subtotal = parseInt(element.price) * element.quantity;
+              element.selectedstatus = false;
+            });
+          }
+        }
+      }, 1000);
 
+    });
     console.log(this.cartList, 'CARTLIST');
 
   }
