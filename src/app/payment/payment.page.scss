@@ -79,12 +79,16 @@ ion-icon {
   font-size: 14px;
   outline: none;
 }
-.payment-form ion-input {
+.payment-form ion-input, .payment-form ion-textarea {
   border: 1px solid #808080;
   border-radius: 10px;
   position: relative;
   outline: none;    
   font-size: 14px;
+}
+.payment-form ion-textarea {
+  --padding-end: 5px;
+  --padding-start: 5px;
 }
 .payment-form img {
   width: 30px;

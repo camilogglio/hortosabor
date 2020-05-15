@@ -134,6 +134,17 @@ img.arrow {
     display: inline-grid;
     float: right;
 }
+
+.effective-date {
+    // color: #000 !important;
+    font-size: 18px !important;
+
+    span {
+        font-size: 20px;
+        color: #00b84c;
+    }
+}
+
 @media (max-width: 411px){
 .slider-arrow {
     // top: 50% !important;

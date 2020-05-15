@@ -23,7 +23,7 @@
   <div class="form">
     <ion-item lines="none">
       <ion-label>{{'delivery-place' | translate}}</ion-label>
-      <ion-select mode="md" okText="{{'okay' | translate}}" cancelText="{{'dismiss' | translate}}" [(ngModel)]="selectedPlace" (ionChange)="changeDeliveryPlace($event)">
+      <ion-select mode="md" class="delivery-place-select" okText="{{'okay' | translate}}" cancelText="{{'dismiss' | translate}}" [(ngModel)]="selectedPlace" (ionChange)="changeDeliveryPlace($event)">
         <ion-select-option *ngFor="let place of places;" value="{{place.id}}">{{place.name}}</ion-select-option>
         <!-- <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>

@@ -55,6 +55,7 @@
     "email-add;ress":"Email address is required",
     "optional" : "Optional",
     "delivery-address":"Delivery Address",
+    "address": "Address",
     "delivery-date":"Delivery Date",
     "comment":"Comment",
     "download":"Download",
@@ -73,6 +74,7 @@
     "no-product-found":" No Product Found.",
     "done":"Done",
     "pleasewait":"Please wait...",
-    "select_delivery_date_place":"Select Delivery Place and Date."
+    "select_delivery_date_place":"Select Delivery Place and Date.",
+    "effective_date": "Effective date"
 
 }

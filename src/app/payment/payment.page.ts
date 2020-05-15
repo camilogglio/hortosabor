@@ -113,7 +113,7 @@ export class PaymentPage implements OnInit {
 
     if (JSON.parse(localStorage.getItem('deliveryData'))) {
 
-      this.cardForm.controls.address.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryAddress)
+      // this.cardForm.controls.address.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryAddress)
       this.cardForm.controls.delivery_date.setValue(JSON.parse(localStorage.getItem('deliveryData')).deliveryDate)
     }
   }
@@ -130,6 +130,7 @@ export class PaymentPage implements OnInit {
     }, 100);
 
   }
+
   check() {
     console.log(this.paymentForm.value.expDate);
     var date = this.paymentForm.value.expDate;
@@ -142,6 +143,7 @@ export class PaymentPage implements OnInit {
     console.log("month", month, newmonth[0]);
     console.log("year", year);
   }
+
   chooseType(value) {
     if (value == 'cash') {
       this.card_Image = true;
@@ -165,7 +167,7 @@ export class PaymentPage implements OnInit {
   }
 
   cardTypePayment() {
-    const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total, '_blank', this.iabOption);
+    const browser = this.iab.create('https://hortosabor.com.ar/checkout/' + this.total+'/'+this.translate.defaultLang, '_blank', this.iabOption);
     browser.on('loadstop').subscribe(event => {
       console.log('loadstop:: ', event);
       var url = event.url.substring(0, 10);
@@ -333,11 +335,13 @@ export class PaymentPage implements OnInit {
       product: this.products,
       delivery_address: JSON.parse(localStorage.getItem('deliveryData')).place,
       delivery_date: JSON.parse(localStorage.getItem('deliveryData')).deliveryDate,
+      address: data.data.address,
       phone_number: data.data.phone,
       email: data.data.email,
       local_id: data.data.local,
       total_price: this.total,
       payment_type: 'card',
+      lang: this.translate.defaultLang,
       name: data.data.cardholderName,
       comment: this.comments,
       expiryMonth: data.data.response['expiration_month'],
@@ -361,7 +365,9 @@ export class PaymentPage implements OnInit {
         this.cardForm.reset();
         this.paymentForm.reset();
         localStorage.removeItem('cart_data');
+        this.events.publish('updateCart', Date.now());
         setTimeout(() => {
+          this.api.hideLoader();
           this.router.navigate(['/status'], { queryParams: { value: JSON.stringify(data.order_number) } });
         }, 1000);
       }
@@ -444,6 +450,7 @@ export class PaymentPage implements OnInit {
     console.log('formatVal:- ', parts, formatVal);
     $('input[formControlName="cardnumber"]').val(formatVal);
   }
+
   confirm_payment() {
     var phone = document.getElementById("mobileno");
     var country = $(phone).intlTelInput("getSelectedCountryData").dialCode;
@@ -458,10 +465,12 @@ export class PaymentPage implements OnInit {
       product: this.products,
       delivery_address: JSON.parse(localStorage.getItem('deliveryData')).place,
       delivery_date: JSON.parse(localStorage.getItem('deliveryData')).deliveryDate,
+      address: this.cardForm.value.address,
       phone_number: full_number,
       email: this.cardForm.value.email,
       local_id: this.cardForm.value.local_id,
       total_price: this.total,
+      lang: this.translate.defaultLang,
       token: '',
       payment_type: 'cash',
       name: this.cardForm.value.name,

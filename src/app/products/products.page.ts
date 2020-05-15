@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, NavController, ModalController } from '@ionic/angular';
+import { IonSlides, NavController, ModalController, Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../api.service';
 import { CartService } from '../cart.service';
@@ -36,6 +36,7 @@ export class ProductsPage implements OnInit {
     public cart: CartService,
     public modalCtrl: ModalController,
     public translate: TranslateService,
+    public events: Events
   ) {
     this.total = this.cart.calculateTotal();
     console.log(this.cart.calculateTotal());
@@ -157,7 +158,7 @@ console.log(this.translate);
     this.searchResult = [];
   }
   goTo(url) {
-    this.router.navigate([url], { queryParams: { value: JSON.stringify(this.navData) } });
+    this.router.navigateByUrl(url, { queryParams: { value: JSON.stringify(this.navData) } });
   
     // this.navCtrl.navigateForward(url);
   }
@@ -213,5 +214,7 @@ console.log(this.translate);
     this.total = this.cart.calculateTotal();
     var message = this.translate.defaultLang == 'es' ? 'Producto agregado al carrito con éxito.' : 'Product added to cart successfully.' ;
     this.api.presentToast(message);
+    this.events.publish('updateCart', Date.now());
+
   }
 }

@@ -78,7 +78,7 @@
           <ion-col size="6">
             <input id="phone-no" type="hidden" placeholder="Mobile" formControlName="dailcode" class="signupdailcode">
             <input type="tel" id="mobileno" formControlName="phone" (keyup)="updatephone($event)"
-              placeholder="9874512630" maxlength="10">
+              placeholder="9874512630" maxlength="11">
             <!-- <input type="tel" placeholder="Phone"  formControlName="phone" maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"/> -->
             <p class="payment-error"
               *ngIf="cardForm.get('phone').hasError('required') && cardForm.get('phone').touched">
@@ -95,10 +95,10 @@
               <!-- {{'local_id' |translate}} {{'is-required' | translate}}</p> -->
           </ion-col>
          
-          <ion-col size="6">
-            <label for="address">{{'delivery-address' |translate}} :  </label>({{'optional' |translate}})
-            <ion-input type="text" placeholder="Delivery Address" disabled formControlName="address" 
-              ></ion-input>
+          <ion-col size="12">
+            <label for="address">{{'address' |translate}} :  </label>({{'optional' |translate}})
+            <ion-textarea type="text" placeholder="{{'address' |translate}} ({{'optional' |translate}})" formControlName="address" 
+              ></ion-textarea>
           </ion-col>
           <!-- <ion-col size="6">
             <label for="delivery_date">{{'delivery-date' |translate}} :  </label>({{'optional' |translate}})

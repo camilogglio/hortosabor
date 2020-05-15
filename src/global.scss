@@ -97,6 +97,17 @@ ion-menu-button {
       }
   }
 }
+
+// .delivery-place-select {
+  .alert-radio-button {
+    height: auto !important;
+    min-height: 55px !important;
+  }
+  .alert-radio-label {
+    text-overflow: unset !important;
+    white-space: unset !important;
+  }
+// }
 // 
 #cardNumber {
     background-image: url(./assets/images/imgs.png), url(./assets/images/imgs.png);

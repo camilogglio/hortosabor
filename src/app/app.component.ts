@@ -26,32 +26,25 @@ export class AppComponent {
       url: '/delivery',
       icon: 'assets/images/Delivery.png'
     },
-    {
-      title: 'cart_list',
-      url: '/cartlist',
-      icon: 'assets/images/cart.png'
-    },
-   
     // {
-    //   title: 'Payment',
-    //   url: '/payment',
-    //   icon: 'assets/images/Payment.png'
+    //   title: 'cart_list',
+    //   url: '/cartlist',
+    //   icon: 'assets/images/cart.png'
     // },
-    {
-      title: 'status',
-      url: '/status',
-      icon: 'assets/images/Order.png'
-    },
-    {
-      title: 'receipts',
-      url: '/history',
-      icon: 'assets/images/Receipt.png'
-    },
+   
+
+
     // {
-    //   title: 'Terms & Conditions',
-    //   url: '/terms',
-    //   icon: 'assets/images/Terms&Conditions.png'
-    // }
+    //   title: 'status',
+    //   url: '/status',
+    //   icon: 'assets/images/Order.png'
+    // },
+    // {
+    //   title: 'receipts',
+    //   url: '/history',
+    //   icon: 'assets/images/Receipt.png'
+    // },
+    
   ];
 
   constructor(
@@ -66,7 +59,6 @@ export class AppComponent {
     public translate: TranslateService,
   ) {
     this.initializeApp();
-
   }
 
   initializeApp() {
@@ -77,8 +69,8 @@ export class AppComponent {
       }, 1000);
     });
 
-    // this.translate.setDefaultLang('es');
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('es');
+    // this.translate.setDefaultLang('en');
 
     // if(localStorage.getItem('lang') && localStorage.getItem('lang')!=undefined){
     //   var val = JSON.parse(localStorage.getItem('lang'));
@@ -113,17 +105,19 @@ export class AppComponent {
         var message = this.translate.defaultLang == 'es' ? 'Seleccione Lugar de entrega y fecha.' : 'Select Delivery Place and Date.' ;
         this.api.presentToast(message);
       }
-   
   }
   openterms(){
     window.open('https://www.hortosabor.com.ar/terminos', '_system');  
   }
   gotoPage(url: any) {
     this.selectedItem = url;
-    if(url =='/status'){
+    if(url == '/status'){
       this.events.publish('status:created', Date.now());
+    } 
+    if (url == '/cartlist') {
+      this.events.publish('updateCart', Date.now());
     }
-    this.router.navigateByUrl(url);
+    this.navCtrl.navigateRoot(url);
     // this.navCtrl.navigateRoot(url);
   }
   closemenu() {
