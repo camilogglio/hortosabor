@@ -17,6 +17,7 @@ export class CartlistPage implements OnInit {
   selectedData: any = {};
   navData: any = '';
   constructor(public translate: TranslateService, public events: Events, public cart: CartService, public api: ApiService, public navCtrl: NavController, public route: ActivatedRoute, public router: Router) {
+    this.cartList = [];
     this.route.queryParams.subscribe(params => {
       if (params && params.value) {
         this.navData = JSON.parse(params.value);
@@ -41,6 +42,7 @@ export class CartlistPage implements OnInit {
 
     console.log('CONSTRUCTOR');
     this.events.subscribe('updateCart', (time) => {
+      this.cartList = [];
       console.log('Constructor event updateCart');
       this.total = this.cart.calculateTotal();
       console.log(JSON.parse(localStorage.getItem('cart_data')))
@@ -55,7 +57,9 @@ export class CartlistPage implements OnInit {
       }
     });
     this.events.subscribe('updateCartmenu', (time) => {
+      this.cartList = [];
       setTimeout(() => {
+        this.cartList = [];
         console.log('Constructor event updateCartmenu');
         this.total = this.cart.calculateTotal();
         console.log(JSON.parse(localStorage.getItem('cart_data')))
@@ -77,8 +81,10 @@ export class CartlistPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
+    this.cartList = [];
 
     this.events.subscribe('updateCart', (time) => {
+      this.cartList = [];
       console.log('ngOnInit event updateCart');
       this.total = this.cart.calculateTotal();
       console.log(JSON.parse(localStorage.getItem('cart_data')))
@@ -98,7 +104,7 @@ export class CartlistPage implements OnInit {
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
-
+    this.cartList = [];
     this.total = this.cart.calculateTotal();
     console.log(JSON.parse(localStorage.getItem('cart_data')))
     if (JSON.parse(localStorage.getItem('cart_data'))) {
