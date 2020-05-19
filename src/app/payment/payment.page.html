@@ -37,6 +37,7 @@
     <h2>{{'cash_text' | translate}}</h2>
     <h2>{{'authorize_for' |translate}} {{total | currency:'USD'}}</h2>
   </div>
+
   <div class="payment-cards " text-center *ngIf="active_Image || activeImage">
     <p>{{'we_accept'|translate}}</p>
     <ion-row>
@@ -56,6 +57,7 @@
       <ion-col size="2"></ion-col>
     </ion-row>
   </div>
+
   <div class="payment-form">
     <h4 text-center class="payment_invoiceheading">{{'information_for_invocie' |translate}}</h4>
     <div class="user-info">
@@ -96,7 +98,7 @@
           </ion-col>
          
           <ion-col size="12">
-            <label for="address">{{'address' |translate}} :  </label>({{'optional' |translate}})
+            <!-- <label for="address">{{'address' |translate}} :  </label>({{'optional' |translate}}) -->
             <ion-textarea type="text" placeholder="{{'address' |translate}} ({{'optional' |translate}})" formControlName="address" 
               ></ion-textarea>
           </ion-col>
@@ -108,6 +110,14 @@
             
         </ion-row>
       </form>
+
+      <!-- <form action="https://hortosabor.com.ar/handle-payment/{{total}}/test@yopmail.com/" method="POST" id="paymentCardForm">
+        <script
+          src="https://www.mercadopago.com.ar/integrations/v1/web-tokenize-checkout.js"
+          data-public-key="TEST-e8c047d4-726a-4e98-b9bb-218484a3baf5"
+          data-transaction-amount="{{total}}"> 
+        </script>
+      </form> -->
     </div>
     <form action="" method="post" id="pay" name="pay" [formGroup]="paymentForm" *ngIf="active_Image || activeImage">
       <fieldset>
@@ -192,6 +202,7 @@
     <ion-button type="submit" expand="block" class="price-button" (click)="confirm_payment()"
       [disabled]="cardForm.invalid" *ngIf="card_Image">{{'authorize' | translate}}</ion-button>
   </div>
+
   <!-- <div class="payment-form">
     <form [formGroup]="cardForm" autocomplete="on" >
     <div class="user-info">
